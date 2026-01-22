@@ -114,7 +114,3 @@
     will-change: transform, filter;
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .hero-poster-alive { animation: none; }
-}

@@ -17,9 +17,8 @@ function HeroRightMapSkeleton() {
         </div>
     );
 }
-
 const HeroRightMap = dynamic(() => import("@/components/HeroRightMap"), {
-    ssr: true,
+    ssr: false,
     loading: HeroRightMapSkeleton,
 });
 
