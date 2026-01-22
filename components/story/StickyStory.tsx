@@ -18,8 +18,7 @@ type Props = { scenes: Scene[] };
 export default function StickyStory({ scenes }: Props) {
     const prefersReduced = useReducedMotion();
     const [active, setActive] = useState(0);
-    const refs = useRef<Array<HTMLDivElement | null>>([]);
-
+    const refs = useRef<Array<HTMLElement | null>>([]);
     useEffect(() => {
         const io = new IntersectionObserver(
             (entries) => {
