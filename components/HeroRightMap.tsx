@@ -1,30 +1,19 @@
-// components/HeroRightMap.tsx
-import fs from "fs/promises";
-import path from "path";
+"use client";
+
 import HeroRightMapClient from "./HeroRightMapClient";
 
+type Country = "DK" | "SE" | "NO" | "FI" | "IS";
+
 type Props = {
-    initialCountry?: "DK" | "SE" | "NO" | "FI" | "IS";
-    initialStats?: {
-        asOf: string;
-        country: string;
-        windowLabel: string;
-        priceChanges: { totalChanged: number; increases: number; decreases: number };
-        availability: { shortage: number; atRisk: number; total: number };
-        status: { new: number; back: number; discontinued: number };
-    };
+    initialCountry?: Country;
     variant?: "frame" | "performativ";
     className?: string;
+    accentRgb?: string;
+
+    // kept for compatibility; ignored by the new client component
+    initialStats?: unknown;
 };
 
-export default async function HeroRightMap(props: Props) {
-    let svgMarkup: string | undefined;
-    try {
-        const file = path.join(process.cwd(), "public", "maps", "nordics.svg");
-        svgMarkup = await fs.readFile(file, "utf8");
-    } catch {
-        svgMarkup = undefined;
-    }
-
-    return <HeroRightMapClient {...props} svgMarkup={svgMarkup} />;
+export default function HeroRightMap(props: Props) {
+    return <HeroRightMapClient {...props} />;
 }

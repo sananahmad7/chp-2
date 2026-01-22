@@ -1,41 +1,71 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useId } from "react";
-import useSWR from "swr";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 
 /* -------------------------------------------------------------------------- */
-/* Types & helpers                                                            */
+/* Types                                                                       */
 /* -------------------------------------------------------------------------- */
 
 type Country = "DK" | "SE" | "NO" | "FI" | "IS";
-type HeroStats = {
-  asOf: string;
-  country: string;
-  windowLabel: string;
-  priceChanges: { totalChanged: number; increases: number; decreases: number };
-  availability: { shortage: number; atRisk: number; total: number };
-  status: { new: number; back: number; discontinued: number };
+
+type MarketCard = {
+  name: string;
+  headline: string;
+  chips: string[];
+  note: string;
 };
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const COUNTRIES: Country[] = ["DK", "SE", "NO", "FI", "IS"];
 
-function fmtHM(d: Date) {
-  try {
-    return new Intl.DateTimeFormat("en-GB", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(d);
-  } catch {
-    const h = String(d.getHours()).padStart(2, "0");
-    const m = String(d.getMinutes()).padStart(2, "0");
-    return `${h}:${m}`;
-  }
+const COUNTRY_NAME: Record<Country, string> = {
+  DK: "Denmark",
+  SE: "Sweden",
+  NO: "Norway",
+  FI: "Finland",
+  IS: "Iceland",
+};
+
+const MARKET: Record<Country, MarketCard> = {
+  DK: {
+    name: "Denmark",
+    headline: "Pricing & tender overview with sell‑out context (DK) and shortage signals—delivered with traceability.",
+    chips: ["Pricing signals", "Tender context", "Sell‑out (DK)", "Shortage risk", "Source traceability"],
+    note: "Coverage varies by chain and category. Ask for a coverage sheet for your portfolio.",
+  },
+  SE: {
+    name: "Sweden",
+    headline: "Track pricing movements and supply signals across Nordic free‑pricing chains with audit‑ready outputs.",
+    chips: ["Pricing signals", "Availability flags", "Status changes", "Shortage risk", "Source traceability"],
+    note: "Coverage varies by chain and category. Ask for a coverage sheet for your portfolio.",
+  },
+  NO: {
+    name: "Norway",
+    headline: "Identify price shifts and supply tension with explainable drivers—built for regulated workflows.",
+    chips: ["Pricing signals", "Availability flags", "Status changes", "Shortage risk", "Explainable drivers"],
+    note: "Coverage varies by chain and category. Ask for a coverage sheet for your portfolio.",
+  },
+  FI: {
+    name: "Finland",
+    headline: "Nordic visibility for pricing and supply signals with governance and traceability from day one.",
+    chips: ["Pricing signals", "Status changes", "Shortage risk", "Traceability", "Audit‑friendly exports"],
+    note: "Coverage varies by chain and category. Ask for a coverage sheet for your portfolio.",
+  },
+  IS: {
+    name: "Iceland",
+    headline: "Coverage depends on available sources—request a scope check and we’ll confirm what’s included.",
+    chips: ["Pricing signals", "Status changes", "Traceability"],
+    note: "Coverage varies by chain and category. Ask for a coverage sheet for your portfolio.",
+  },
+};
+
+function isCountry(x: string | null): x is Country {
+  return x === "DK" || x === "SE" || x === "NO" || x === "FI" || x === "IS";
 }
 
 /* -------------------------------------------------------------------------- */
-/* Inline SVG map (SSR markup enhanced on client)                             */
+/* Inline SVG map (client enhanced)                                            */
 /* -------------------------------------------------------------------------- */
 
 function ClickableNordics({
@@ -51,21 +81,21 @@ function ClickableNordics({
                             svgMarkup,
 
                             /** Selected/focus accent (RGB triplet string "r,g,b") */
-                            accentRgb = "56,189,248",   // used for selected + focus
-                            selectedAlpha = 0.30,       // selected fill opacity
+                            accentRgb = "56,189,248",
+                            selectedAlpha = 0.30,
 
-                            /** Softer selected edge */
-                            strokeAlpha = 0.85,         // outline opacity when selected
-                            selectedStrokeWidth = 1.5,  // outline width when selected
+                            /** Selected edge */
+                            strokeAlpha = 0.85,
+                            selectedStrokeWidth = 1.5,
 
-                            /** Neutral HOVER (not blue) — toned down further */
-                            hoverRgb = "255,255,255",   // light neutral hover (white)
-                            hoverFillAlpha = 0.14,      // ↓ from .20 so hover doesn’t outshine selected
-                            hoverStrokeAlpha = 0.50,    // ↓ from .65
-                            hoverGlowAlpha = 0.12,      // ↓ from .20
-                            hoverStrokeWidth = 1.25,    // thinner than selected edge
+                            /** Neutral hover (not blue) */
+                            hoverRgb = "255,255,255",
+                            hoverFillAlpha = 0.14,
+                            hoverStrokeAlpha = 0.50,
+                            hoverGlowAlpha = 0.12,
+                            hoverStrokeWidth = 1.25,
 
-                            /** Accessibility: announce which KPI region is controlled by the map */
+                            /** Accessibility */
                             ariaControlsId,
                           }: {
   active: Country;
@@ -84,7 +114,6 @@ function ClickableNordics({
   strokeAlpha?: number;
   selectedStrokeWidth?: number;
 
-  /** Hover tokens */
   hoverRgb?: string;
   hoverFillAlpha?: number;
   hoverStrokeAlpha?: number;
@@ -94,16 +123,16 @@ function ClickableNordics({
   ariaControlsId?: string;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
-  const CODES: Country[] = ["DK", "SE", "NO", "FI", "IS"];
 
   useEffect(() => {
     let cancelled = false;
+    const cleanups: Array<() => void> = [];
 
     async function mount() {
       const host = hostRef.current;
       if (!host) return;
 
-      // Prefer SSR markup, else fetch
+      // Prefer provided markup, else fetch the SVG from /public
       if (!host.querySelector("svg")) {
         if (svgMarkup) {
           host.innerHTML = svgMarkup;
@@ -122,22 +151,21 @@ function ClickableNordics({
       svg.setAttribute("height", "100%");
       svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
-      // Tight viewBox from country bboxes
+      // Tight viewBox from country bboxes (optional improvement; safe even if missing)
       const boxes: Partial<Record<Country, DOMRect>> = {};
-      CODES.forEach((code) => {
+      COUNTRIES.forEach((code) => {
         const el = svg.querySelector<SVGGraphicsElement>(`#${code}`);
         if (el) boxes[code] = el.getBBox();
       });
 
-      const have = CODES.filter((c) => boxes[c]);
+      const have = COUNTRIES.filter((c) => boxes[c]);
       if (have.length >= 3) {
         const rects = have.map((c) => boxes[c]!);
         const minX = Math.min(...rects.map((b) => b.x));
         const minY = Math.min(...rects.map((b) => b.y));
         const maxX = Math.max(...rects.map((b) => b.x + b.width));
-        const mainRects = (["DK", "SE", "FI", "IS"] as Country[])
-          .filter((c) => boxes[c])
-          .map((c) => boxes[c]!);
+
+        const mainRects = (["DK", "SE", "FI", "IS"] as Country[]).filter((c) => boxes[c]).map((c) => boxes[c]!);
         const mainlandMaxY = Math.max(...mainRects.map((b) => b.y + b.height));
         const no = boxes["NO"];
         const noMaxYClamped = no ? Math.min(no.y + no.height, mainlandMaxY) : -Infinity;
@@ -147,16 +175,12 @@ function ClickableNordics({
         const baseH = maxY - minY;
         const pad = Math.max(baseW, baseH) * (paddingPercent / 100);
 
-        svg.setAttribute(
-          "viewBox",
-          `${minX - pad} ${minY - pad} ${baseW + pad * 2} ${baseH + pad * 2}`
-        );
+        svg.setAttribute("viewBox", `${minX - pad} ${minY - pad} ${baseW + pad * 2} ${baseH + pad * 2}`);
       }
 
-      // === Injected styles target element AND children =======================
+      // Inject styles (keep last so it wins)
       const styleEl = document.createElementNS("http://www.w3.org/2000/svg", "style");
       styleEl.textContent = `
-        /* Neutral idle state (keeps CTA visually dominant) */
         #borders * {
           cursor: pointer;
           outline: none;
@@ -168,30 +192,24 @@ function ClickableNordics({
           transition: fill .12s ease, stroke .12s ease, stroke-width .12s ease, filter .12s ease;
           filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35));
           vector-effect: non-scaling-stroke;
-          /* Softer geometry on jagged outlines */
           stroke-linejoin: round;
           stroke-linecap: round;
-          /* Draw stroke first so inner half sits under the fill → visually slimmer edge */
           paint-order: stroke fill;
         }
 
-        /* Map tokens — overridden via element style properties */
         svg {
-          /* Selected/focus accent (blue) */
           --map-accent: 56,189,248;
           --map-selected-alpha: .30;
-          --map-stroke-alpha: .85;            /* softer edge */
-          --map-selected-stroke-w: 1.5;       /* slimmer edge */
+          --map-stroke-alpha: .85;
+          --map-selected-stroke-w: 1.5;
 
-          /* Hover tokens (neutral, non-blue; toned down) */
           --map-hover-rgb: 255,255,255;
-          --map-hover-fill-alpha: .14;        /* ↓ from .20 */
-          --map-hover-stroke-alpha: .50;      /* ↓ from .65 */
-          --map-hover-glow-alpha: .12;        /* ↓ from .20 */
-          --map-hover-stroke-w: 1.25;         /* thinner than selected */
+          --map-hover-fill-alpha: .14;
+          --map-hover-stroke-alpha: .50;
+          --map-hover-glow-alpha: .12;
+          --map-hover-stroke-w: 1.25;
         }
 
-        /* HOVER — neutral light (not blue) — only when hovering a NON-selected country */
         svg[data-hover="DK"]:not([data-active-country="DK"])  #DK,  svg[data-hover="DK"]:not([data-active-country="DK"])  #DK  *,
         svg[data-hover="SE"]:not([data-active-country="SE"])  #SE,  svg[data-hover="SE"]:not([data-active-country="SE"])  #SE  *,
         svg[data-hover="NO"]:not([data-active-country="NO"])  #NO,  svg[data-hover="NO"]:not([data-active-country="NO"])  #NO  *,
@@ -203,7 +221,6 @@ function ClickableNordics({
           filter: drop-shadow(0 0 8px rgba(var(--map-hover-rgb), var(--map-hover-glow-alpha)));
         }
 
-        /* Fallback :hover — also disabled when that country is selected */
         svg:not([data-active-country="DK"]) #DK:hover, svg:not([data-active-country="DK"]) #DK:hover *,
         svg:not([data-active-country="SE"]) #SE:hover, svg:not([data-active-country="SE"]) #SE:hover *,
         svg:not([data-active-country="NO"]) #NO:hover, svg:not([data-active-country="NO"]) #NO:hover *,
@@ -215,7 +232,6 @@ function ClickableNordics({
           filter: drop-shadow(0 0 8px rgba(var(--map-hover-rgb), var(--map-hover-glow-alpha)));
         }
 
-        /* SELECTED — keep the accent (blue by default) with softer edge */
         svg[data-active-country="DK"] #DK, svg[data-active-country="DK"] #DK *,
         svg[data-active-country="SE"] #SE, svg[data-active-country="SE"] #SE *,
         svg[data-active-country="NO"] #NO, svg[data-active-country="NO"] #NO *,
@@ -226,7 +242,6 @@ function ClickableNordics({
           stroke-width: var(--map-selected-stroke-w) !important;
         }
 
-        /* KEYBOARD FOCUS — high contrast */
         #borders [tabindex]:focus-visible,
         #borders [tabindex]:focus-visible * {
           outline: none;
@@ -239,14 +254,12 @@ function ClickableNordics({
           #borders * { transition: none !important; filter: none !important; }
         }
 
-        /* Position tweak */
         #borders {
           transform-box: view-box;
           transform-origin: 50% 50%;
           transform: translate(${shiftPercent}%, ${shiftYPercent}%);
         }
 
-        /* Iceland inset */
         #IS-inset-box {
           stroke: rgba(255,255,255,0.35);
           fill: transparent;
@@ -254,9 +267,9 @@ function ClickableNordics({
           ${showInsetFrame ? "" : "display: none;"}
         }
       `;
-      svg.appendChild(styleEl); // keep last so it wins
+      svg.appendChild(styleEl);
 
-      // Set/override CSS variables from props (so parent can theme)
+      // Apply CSS variables from props
       svg.style.setProperty("--map-accent", accentRgb);
       svg.style.setProperty("--map-selected-alpha", String(selectedAlpha));
       svg.style.setProperty("--map-stroke-alpha", String(strokeAlpha));
@@ -268,26 +281,28 @@ function ClickableNordics({
       svg.style.setProperty("--map-hover-glow-alpha", String(hoverGlowAlpha));
       svg.style.setProperty("--map-hover-stroke-w", String(hoverStrokeWidth));
 
-      // Interactivity (hover & select)
+      // Interactivity
       const setHover = (code?: Country) => {
-        if (!svg) return;
         if (code) svg.setAttribute("data-hover", code);
         else svg.removeAttribute("data-hover");
       };
 
-      (["DK", "SE", "NO", "FI", "IS"] as Country[]).forEach((code) => {
+      COUNTRIES.forEach((code) => {
         const el = svg.querySelector<SVGGraphicsElement>(`#${code}`);
         if (!el) return;
 
         el.setAttribute("tabindex", "0");
         el.setAttribute("role", "button");
-        el.setAttribute("aria-label", `${code} — filter KPIs to ${code}`);
+        el.setAttribute("aria-label", `Select ${COUNTRY_NAME[code]} (${code})`);
         if (ariaControlsId) el.setAttribute("aria-controls", ariaControlsId);
         el.setAttribute("aria-pressed", code === active ? "true" : "false");
 
         const onClick = () => onSelect(code);
         const onKey = (e: KeyboardEvent) => {
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(code); }
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect(code);
+          }
         };
         const onEnter = () => setHover(code);
         const onLeave = () => setHover(undefined);
@@ -297,12 +312,12 @@ function ClickableNordics({
         el.addEventListener("pointerenter", onEnter, { passive: true });
         el.addEventListener("pointerleave", onLeave, { passive: true });
 
-        (el as any).__cleanup = () => {
+        cleanups.push(() => {
           el.removeEventListener("click", onClick as any);
           el.removeEventListener("keydown", onKey as any);
           el.removeEventListener("pointerenter", onEnter as any);
           el.removeEventListener("pointerleave", onLeave as any);
-        };
+        });
       });
 
       svg.setAttribute("data-active-country", active);
@@ -314,21 +329,18 @@ function ClickableNordics({
 
     return () => {
       cancelled = true;
-      const host = hostRef.current;
-      if (!host) return;
-      host.querySelectorAll<SVGGraphicsElement>("#borders g").forEach((el) => {
-        (el as any).__cleanup?.();
-      });
+      cleanups.forEach((fn) => fn());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, svgMarkup, paddingPercent, shiftPercent, shiftYPercent, showInsetFrame]);
 
-  // Keep active highlight + aria-pressed in sync
+  // Keep selected highlight & aria-pressed in sync
   useEffect(() => {
     const svg = hostRef.current?.querySelector("svg");
     if (!svg) return;
     svg.setAttribute("data-active-country", active);
-    (["DK", "SE", "NO", "FI", "IS"] as Country[]).forEach((code) => {
+
+    COUNTRIES.forEach((code) => {
       const el = svg.querySelector<SVGGraphicsElement>(`#${code}`);
       if (el) el.setAttribute("aria-pressed", code === active ? "true" : "false");
     });
@@ -338,6 +350,7 @@ function ClickableNordics({
   useEffect(() => {
     const svg = hostRef.current?.querySelector("svg");
     if (!svg) return;
+
     svg.style.setProperty("--map-accent", accentRgb);
     svg.style.setProperty("--map-selected-alpha", String(selectedAlpha));
     svg.style.setProperty("--map-stroke-alpha", String(strokeAlpha));
@@ -348,7 +361,17 @@ function ClickableNordics({
     svg.style.setProperty("--map-hover-stroke-alpha", String(hoverStrokeAlpha));
     svg.style.setProperty("--map-hover-glow-alpha", String(hoverGlowAlpha));
     svg.style.setProperty("--map-hover-stroke-w", String(hoverStrokeWidth));
-  }, [accentRgb, selectedAlpha, strokeAlpha, selectedStrokeWidth, hoverRgb, hoverFillAlpha, hoverStrokeAlpha, hoverGlowAlpha, hoverStrokeWidth]);
+  }, [
+    accentRgb,
+    selectedAlpha,
+    strokeAlpha,
+    selectedStrokeWidth,
+    hoverRgb,
+    hoverFillAlpha,
+    hoverStrokeAlpha,
+    hoverGlowAlpha,
+    hoverStrokeWidth,
+  ]);
 
   return (
     <div
@@ -364,103 +387,97 @@ function ClickableNordics({
 }
 
 /* -------------------------------------------------------------------------- */
-/* KPI tiles                                                                  */
+/* UI atoms                                                                    */
 /* -------------------------------------------------------------------------- */
 
-function HeaderKPI({
-                     total,
-                     inc,
-                     dec,
-                     country,
+function GlassCard({
+                     label,
+                     children,
                    }: {
-  total?: number | string;
-  inc?: number | string;
-  dec?: number | string;
-  country: Country;
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="rounded-lg border border-white/15 bg-white/10 px-3 py-2.5 sm:px-4 sm:py-3 ring-1 ring-white/10 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,.22)]">
-      <div className="text-[13px] font-medium text-white/90">Price changes (vs prev. period)</div>
-      <div className="mt-0.5 text-xl sm:text-2xl font-semibold tracking-tight text-white">
-        {total ?? "–"} SKUs
-      </div>
-      <div className="mt-0.5 text-[11px] text-white/70">
-        ↑ {inc ?? "–"} · ↓ {dec ?? "–"} · {country} · PPP
-      </div>
+      <div className="text-[13px] font-medium text-white/90">{label}</div>
+      <div className="mt-2">{children}</div>
     </div>
   );
 }
 
-function CellKPI({ label, value, meta }: { label: string; value: string | number; meta?: string }) {
+function Chip({ children }: { children: string }) {
   return (
-    <div className="rounded-lg border border-white/15 bg-white/10 px-3 py-2.5 ring-1 ring-white/10 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,.22)]">
-      <div className="text-[13px] font-medium text-white/90">{label}</div>
-      <div className="mt-0.5 text-xl font-semibold tracking-tight text-white">{value}</div>
-      {meta ? <div className="mt-0.5 text-[11px] leading-4 text-white/70">{meta}</div> : null}
-    </div>
+    <span className="rounded-full bg-black/20 px-2 py-0.5 text-[11px] text-white/80 ring-1 ring-white/10">
+      {children}
+    </span>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-/* Main right-hero with floating KPIs                                         */
+/* Main component                                                              */
 /* -------------------------------------------------------------------------- */
 
 export default function HeroRightMapClient({
                                              initialCountry = "DK",
-                                             initialStats,
-                                             variant = "performativ",
                                              className = "",
                                              svgMarkup,
-                                             /** Map accent (RGB triplet string "r,g,b") */
                                              accentRgb = "56,189,248",
+
+                                             // kept for compatibility with your old props; ignored now
+                                             initialStats,
+                                             variant,
                                            }: {
   initialCountry?: Country;
-  initialStats?: HeroStats;
-  variant?: "frame" | "performativ";
   className?: string;
   svgMarkup?: string;
   accentRgb?: string;
+
+  // deprecated/ignored:
+  initialStats?: unknown;
+  variant?: "frame" | "performativ";
 }) {
   const [country, setCountry] = useState<Country>(initialCountry);
-  const kpiRegionId = useId();
+  const regionId = useId();
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const setCountryAndSync = (c: Country) => {
-    setCountry(c);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("country", c);
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
+  // Optional: read ?country=SE on first load (static-friendly)
+  useEffect(() => {
+    try {
+      const c = new URLSearchParams(window.location.search).get("country");
+      if (isCountry(c)) setCountry(c);
+    } catch {
+      // ignore
+    }
+  }, []);
 
-  const { data } = useSWR<HeroStats>(`/api/hero-stats?country=${country}`, fetcher, {
-    fallbackData: initialStats,
-    refreshInterval: 15 * 60 * 1000,
-    revalidateOnFocus: false,
-  });
+  const syncCountryToUrl = useCallback((c: Country) => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("country", c);
+      window.history.replaceState(null, "", url.toString());
+    } catch {
+      // ignore
+    }
+  }, []);
 
-  const asOfLabel = useMemo(() => fmtHM(new Date(data?.asOf ?? Date.now())), [data?.asOf]);
+  const selectCountry = useCallback(
+    (c: Country) => {
+      setCountry(c);
+      syncCountryToUrl(c);
+    },
+    [syncCountryToUrl]
+  );
 
-  const totalPrice = data?.priceChanges?.totalChanged ?? "–";
-  const inc = data?.priceChanges?.increases ?? "–";
-  const dec = data?.priceChanges?.decreases ?? "–";
-  const shortage = data?.availability?.shortage ?? 0;
-  const atRisk = data?.availability?.atRisk ?? 0;
-  const availTotal = shortage + atRisk;
-  const stNew = data?.status?.new ?? 0;
-  const stBack = data?.status?.back ?? 0;
-  const stDisc = data?.status?.discontinued ?? 0;
-  const statusTotal = stNew + stBack + stDisc;
+  const market = useMemo(() => MARKET[country] ?? MARKET.DK, [country]);
 
-  const kpiVars = {
+  const cardVars = {
     "--kpi-gap": "0.75rem",
     "--kpi-max": "24rem",
     "--kpi-w": "min(var(--kpi-max), calc((100% - var(--kpi-gap)) / 2))",
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return (
-    <div className={["relative h-full w-full overflow-visible", className].join(" ")} style={kpiVars}>
-      {/* Boot CSS for first paint, removed by ClickableNordics when ready */}
+    <div className={["relative h-full w-full overflow-visible", className].join(" ")} style={cardVars}>
+      {/* Boot CSS for first paint; removed after SVG mounts */}
       <style suppressHydrationWarning>{`
         [data-map-boot] svg #borders * {
           fill: rgba(255,255,255,.18) !important;
@@ -473,68 +490,160 @@ export default function HeroRightMapClient({
         }
       `}</style>
 
-      {/* CHANGED: match the text card shell → remove border & outer overflow */}
+      {/* Map shell */}
       <div className="h-full rounded-2xl bg-white/5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm">
         <div className="relative h-full p-3 sm:p-4">
-          <div className="relative h-full rounded-lg overflow-hidden" data-map-boot>
+          <figure className="relative h-full rounded-lg overflow-hidden" data-map-boot>
             <ClickableNordics
               active={country}
-              onSelect={setCountryAndSync}
+              onSelect={selectCountry}
               svgMarkup={svgMarkup}
               accentRgb={accentRgb}
-              ariaControlsId={kpiRegionId}
+              ariaControlsId={regionId}
             />
-            <figcaption className="sr-only">Interactive map of the Nordics. Select a country.</figcaption>
-          </div>
+            <figcaption className="sr-only">
+              Interactive map of the Nordics. Select a country to see coverage.
+            </figcaption>
+          </figure>
         </div>
       </div>
 
-      {/* Floating chips (desktop) */}
+      {/* Desktop overlay cards (match your old layout) */}
       <div
-        id={kpiRegionId}
+        id={regionId}
         role="region"
-        aria-live="polite"
-        aria-label="KPIs for selected country"
+        aria-label="Selected market coverage"
         className="pointer-events-none absolute -top-6 left-4 right-4 z-20 hidden md:flex"
       >
         <div className="pointer-events-auto w-[var(--kpi-w)] min-w-[220px]">
-          <HeaderKPI total={totalPrice} inc={inc} dec={dec} country={country} />
+          <GlassCard label="Nordic coverage">
+            <div className="text-xl sm:text-2xl font-semibold tracking-tight text-white">
+              {market.name}
+            </div>
+            <p className="mt-1 text-[11px] leading-4 text-white/70">{market.headline}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {market.chips.map((c) => (
+                <Chip key={c}>{c}</Chip>
+              ))}
+            </div>
+          </GlassCard>
         </div>
       </div>
 
       <div className="pointer-events-none absolute -bottom-6 left-4 right-4 z-20 hidden md:flex gap-3">
         <div className="pointer-events-auto flex-none w-[var(--kpi-w)] min-w-[220px]">
-          <CellKPI
-            label="Availability flags (current)"
-            value={`${availTotal} packs`}
-            meta={`${shortage} shortage · ${atRisk} at risk · as of ${asOfLabel}`}
-          />
+          <GlassCard label="What you’ll see in the platform">
+            <ul className="space-y-1.5 text-[12px] leading-5 text-white/80">
+              <li>• Chain‑level visibility with last‑checked timestamps</li>
+              <li>• Signals with explainable drivers (not black‑box outputs)</li>
+              <li>• Exports that fit pricing & tender cycles</li>
+            </ul>
+            <div className="mt-3">
+              <a
+                href="#lsp-story-heading"
+                className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+              >
+                See the platform story →
+              </a>
+            </div>
+          </GlassCard>
         </div>
+
         <div className="pointer-events-auto flex-none w-[var(--kpi-w)] min-w-[220px]">
-          <CellKPI
-            label={`Status changes${data?.windowLabel ? ` (${data.windowLabel})` : ""}`}
-            value={`${statusTotal} packs`}
-            meta={`${stNew} new · ${stBack} back · ${stDisc} discontinued`}
-          />
+          <GlassCard label="Governance & traceability">
+            <ul className="space-y-1.5 text-[12px] leading-5 text-white/80">
+              <li>• Source traceability for observations</li>
+              <li>• Audit‑friendly workflows and reproducible outputs</li>
+              <li>• Role‑based access and GDPR‑ready operations</li>
+            </ul>
+            <div className="mt-3 flex items-center gap-3">
+              <Link
+                href="/life-sciences/compliance"
+                className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+              >
+                Compliance →
+              </Link>
+              <Link
+                href="/contact?topic=life-sciences"
+                className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+              >
+                Request walkthrough →
+              </Link>
+            </div>
+          </GlassCard>
         </div>
       </div>
 
-      {/* Mobile country pills (neutral styling) */}
-      <div className="mt-3 flex items-center gap-2 md:hidden">
-        {(["DK", "SE", "NO", "FI", "IS"] as Country[]).map((c) => (
-          <button
-            key={c}
-            onClick={() => setCountryAndSync(c)}
-            className={[
-              "rounded-full border px-3 py-1 text-sm",
-              c === country ? "bg-white/20 text-white border-white/30" : "bg-black/20 text-white/90 border-white/20",
-            ].join(" ")}
-            aria-pressed={c === country}
-            aria-label={`Select ${c}`}
-          >
-            {c}
-          </button>
-        ))}
+      {/* Mobile controls + cards */}
+      <div className="mt-3 md:hidden space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          {COUNTRIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => selectCountry(c)}
+              className={[
+                "rounded-full border px-3 py-1 text-sm",
+                c === country
+                  ? "bg-white/20 text-white border-white/30"
+                  : "bg-black/20 text-white/90 border-white/20",
+              ].join(" ")}
+              aria-pressed={c === country}
+              aria-label={`Select ${COUNTRY_NAME[c]}`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        <GlassCard label="Nordic coverage">
+          <div className="text-xl font-semibold tracking-tight text-white">{market.name}</div>
+          <p className="mt-1 text-[12px] leading-5 text-white/75">{market.headline}</p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {market.chips.map((c) => (
+              <Chip key={c}>{c}</Chip>
+            ))}
+          </div>
+          <p className="mt-2 text-[11px] leading-4 text-white/60">{market.note}</p>
+        </GlassCard>
+
+        <GlassCard label="What you’ll see in the platform">
+          <ul className="space-y-1.5 text-[12px] leading-5 text-white/80">
+            <li>• Chain‑level visibility with last‑checked timestamps</li>
+            <li>• Signals with explainable drivers</li>
+            <li>• Exports that fit pricing & tender cycles</li>
+          </ul>
+          <div className="mt-3">
+            <a
+              href="#lsp-story-heading"
+              className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+            >
+              See the platform story →
+            </a>
+          </div>
+        </GlassCard>
+
+        <GlassCard label="Governance & traceability">
+          <ul className="space-y-1.5 text-[12px] leading-5 text-white/80">
+            <li>• Source traceability</li>
+            <li>• Audit‑friendly workflows</li>
+            <li>• Role‑based access and GDPR‑ready operations</li>
+          </ul>
+          <div className="mt-3 flex items-center gap-3">
+            <Link
+              href="/life-sciences/compliance"
+              className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+            >
+              Compliance →
+            </Link>
+            <Link
+              href="/contact?topic=life-sciences"
+              className="text-[12px] text-white/80 underline decoration-white/30 underline-offset-4 hover:text-white"
+            >
+              Request walkthrough →
+            </Link>
+          </div>
+        </GlassCard>
       </div>
     </div>
   );
