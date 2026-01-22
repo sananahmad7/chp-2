@@ -1,3 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CPH design tokens */
+:root{
+    /* brand */
+    --brand: #025eaa;
+    --brand-rgb: 2 94 170;
+
+    /* blues (palette) */
+    --blue-950:#041a2b;
+    --blue-900:#003366;
+    --blue-800:#003B73;
+    --blue-700:#004480;
+    --blue-600:#00509e;
+    --blue-500:#0066cc;
+    --blue-100:#e8f4fc;
+    --blue-050:#f5fafe;
+
+    /* header bg used after scroll (rgb triplet) */
+    --header-bg-rgb: 5 10 25;
+
+    /* neutrals */
+    --gray-900:#1f1f1f;
+    --gray-700:#3f3f3f;
+    --gray-500:#6b6b6b;
+    --gray-200:#e5e5e5;
+    --gray-050:#f5f7fa;
+
+    --top-scrim-height: clamp(88px, 12vh, 160px);
+    --top-scrim-start: .82;
+    --top-scrim-mid: .44;
+
+    /* semantic */
+    --green-500:#009e8f;
+    --orange-500:#e57c00;
+    --red-500:#d55e00;
+
+    /* aliases */
+    --page-bg: var(--blue-050);
+    --surface: #ffffff;
+    --border-color: var(--gray-200);
+    --text-color: var(--gray-900);
+    --muted-text: var(--gray-700);
+
+    --primary-color: var(--blue-600);
+    --secondary-color: var(--blue-700);
+    /* route accent through brand; fallback keeps working if --brand isn't set inline */
+    --accent-color: var(--brand, #025eaa);
+
+    --header-bg: var(--blue-950);
+    --header-text-color: #fff;
+    --grid-bg: var(--gray-050);
+
+    /* scrim control (toggled by NavBar) */
+    --scrim-strength: 0;
+}
+
+/* small helpers */
+@layer utilities{
+    .text-muted{ color: var(--muted-text); }
+    .surface{ background: var(--surface); }
+    .border-default{ border-color: var(--border-color); }
+}
+
+/* Top scrim: completely hidden until html[data-scrim="1"] is present */
+@layer base{
+    body::before{
+        content: "";
+        display: none; /* hidden at top */
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: var(--top-scrim-height);
+        pointer-events: none;
+        z-index: 40;
+        background:
+                linear-gradient(
+                        to bottom,
+                        rgb(var(--header-bg-rgb)/calc(var(--top-scrim-start) * var(--scrim-strength))) 0%,
+                        rgb(var(--header-bg-rgb)/calc(var(--top-scrim-mid) * var(--scrim-strength))) 55%,
+                        transparent 100%
+                );
+    }
+    html[data-scrim="1"] body::before{
+        display: block; /* show scrim only after scroll */
+    }
+
+    /* Remove any layout offset while the header is transparent. Adjust selectors as needed. */
+    html[data-overlay-header="1"] body,
+    html[data-overlay-header="1"] main,
+    html[data-overlay-header="1"] #__next > main {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+.animate-float-slow {
+    animation: float-slow 10s ease-in-out infinite;
+}
+
+/* Micro Ken Burns to avoid the "still" look while video warms up */
+@keyframes hero-kb-alive {
+    0%   { transform: scale(1.012) translateY(0.35%); filter: saturate(1.01) brightness(0.99); }
+    100% { transform: scale(1.000) translateY(0.00%); filter: none; }
+}
+/* Runs until we reveal the real video frame */
+.hero-poster-alive {
+    animation: hero-kb-alive 1.4s ease-in-out infinite alternate;
+    will-change: transform, filter;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-poster-alive { animation: none; }
+}
