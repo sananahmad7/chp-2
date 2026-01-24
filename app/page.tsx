@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import type { CSSProperties } from "react";
 
 import HeroVideo from "@/components/HeroVideo";
+import BookDemoModalTrigger from "@/components/BookDemoModalTrigger";
 import type { Scene } from "@/components/story/StickyStory";
 
 /* -----------------------------------------------------------------------------
@@ -25,6 +26,20 @@ export const metadata: Metadata = {
         type: "website",
     },
 };
+
+/* -----------------------------------------------------------------------------
+ * Links
+ * --------------------------------------------------------------------------- */
+
+const CLIENT_LOGIN_URL = "https://lsp.cphanalytics.com/";
+
+/**
+ * Demo booking popup:
+ * - This is what the modal embeds.
+ * - For now we embed your existing /contact page in an iframe.
+ * - The `embed=1` param is optional, but it lets you later render a slimmer "embedded" layout on /contact if you want.
+ */
+const DEMO_BOOKING_URL = "/contact?topic=life-sciences&embed=1";
 
 /* -----------------------------------------------------------------------------
  * Client-only components (safe for static export)
@@ -310,12 +325,12 @@ export default function Home() {
                                 </ul>
 
                                 <div className="mt-7 flex flex-wrap items-center gap-4">
-                                    <Link
-                                        href="/contact?topic=life-sciences"
+                                    <BookDemoModalTrigger
+                                        label="Book a demo"
+                                        bookingUrl={DEMO_BOOKING_URL}
+                                        embedCalendly={false}
                                         className="inline-flex items-center rounded-full bg-[var(--primary-color)] px-6 py-[0.85rem] text-base font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-black/30"
-                                    >
-                                        Book a demo
-                                    </Link>
+                                    />
 
                                     <a
                                         href="#lsp-story-heading"
@@ -353,20 +368,20 @@ export default function Home() {
                     <div className="mx-auto max-w-7xl px-6 sm:px-8">
                         <div className="grid lg:grid-cols-12">
                             <div className="lg:col-span-7 xl:col-span-6 flex">
-                <span
-                    aria-hidden
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 text-white/70 ring-1 ring-white/15 backdrop-blur-sm"
-                >
-                  <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none">
-                    <path
-                        d="M5 8l5 5 5-5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
+                                <span
+                                    aria-hidden
+                                    className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 text-white/70 ring-1 ring-white/15 backdrop-blur-sm"
+                                >
+                                    <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none">
+                                        <path
+                                            d="M5 8l5 5 5-5"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+                                </span>
                                 <span className="sr-only">Scroll to learn what’s inside the platform</span>
                             </div>
                         </div>
@@ -401,12 +416,12 @@ export default function Home() {
                                 </p>
                             </div>
                             <div className="lg:col-span-4 lg:text-right">
-                                <Link
-                                    href="/contact?topic=life-sciences"
+                                <BookDemoModalTrigger
+                                    label="Request a walkthrough"
+                                    bookingUrl={DEMO_BOOKING_URL}
+                                    embedCalendly={false}
                                     className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                                >
-                                    Request a walkthrough
-                                </Link>
+                                />
                             </div>
                         </div>
                     </div>
@@ -587,12 +602,12 @@ export default function Home() {
                             </ul>
 
                             <div className="mt-6">
-                                <Link
-                                    href="/contact?topic=life-sciences"
+                                <BookDemoModalTrigger
+                                    label="Talk to a life‑science data lead"
+                                    bookingUrl={DEMO_BOOKING_URL}
+                                    embedCalendly={false}
                                     className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                                >
-                                    Talk to a life‑science data lead
-                                </Link>
+                                />
                             </div>
                         </div>
 
@@ -632,12 +647,12 @@ export default function Home() {
                         </p>
 
                         <div className="mt-6 flex items-center justify-center gap-4">
-                            <Link
-                                href="/contact?topic=life-sciences"
+                            <BookDemoModalTrigger
+                                label="Book a demo"
+                                bookingUrl={DEMO_BOOKING_URL}
+                                embedCalendly={false}
                                 className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                            >
-                                Book a demo
-                            </Link>
+                            />
 
                             <Link
                                 href="/solutions/life-science-pro"
@@ -646,6 +661,18 @@ export default function Home() {
                                 Explore the platform
                             </Link>
                         </div>
+
+                        <p className="mt-4 text-sm text-[var(--muted-text)]">
+                            Already a client?{" "}
+                            <a
+                                href="https://lsp.cphanalytics.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                            >
+                                Client Login →
+                            </a>
+                        </p>
                     </div>
                 </div>
             </section>
