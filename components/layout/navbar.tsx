@@ -1,12 +1,14 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useBookingModal } from "@/components/shared/booking-modal-provider";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
+// 1. Import Lucide Icons
+import { Menu, X, ChevronRight, LogIn } from "lucide-react";
 import useScroll from "@/lib/hooks/use-scroll";
 
-const NAV = [
+const NAV_LINKS = [
   { name: "Pillars", href: "#pillars" },
   { name: "LSP Story", href: "#lsp-story" },
   { name: "Services", href: "#services" },
@@ -16,8 +18,9 @@ const NAV = [
 const CLIENT_LOGIN_URL = "https://lsp.cphanalytics.com/";
 
 export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
   const scrolled = useScroll(16);
-  const { open } = useBookingModal();
+  const { open: openBookingModal } = useBookingModal();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -36,191 +39,127 @@ export default function NavBar() {
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
     history.pushState(null, "", href);
+    setIsOpen(false);
   };
 
-  const headerBase =
-    "fixed inset-x-0 top-0 z-50 transition-[background-color,opacity,box-shadow,border-color] duration-300 will-change-transform";
-  const atTop =
-    "!bg-transparent !backdrop-blur-0 !shadow-none !border-transparent text-[var(--header-text-color)]";
-  const afterScroll =
-    "bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)] backdrop-blur border-b border-white/10 shadow-sm";
-
-  const linkBase =
-    "relative inline-flex items-center rounded-md px-2 py-2 text-[15px] font-semibold leading-6 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] after:pointer-events-none after:absolute after:inset-x-0 after:bottom-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-transparent after:rounded-full after:transition-transform after:content-['']";
-  const linkHover =
-    "hover:text-[var(--blue-100)] hover:after:scale-x-100 hover:after:bg-[var(--accent-color)]";
-
-  const topTextShadow = scrolled
-    ? ""
-    : "drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]";
-
-  const cta =
-    "inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
-  const ghost =
-    "inline-flex items-center rounded-full px-3 py-2 text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
-
   return (
-    <header className={`${headerBase} ${scrolled ? afterScroll : atTop}`}>
-      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-6">
-        {/* Brand */}
-        <div className="flex items-center">
-          <Link
-            href="/"
-            aria-label="CPH Analytics home"
-            className={`flex items-center rounded px-1 ${topTextShadow}`}
-          >
-            <Image
-              src="/brand/logo.svg"
-              alt=""
-              width={40}
-              height={40}
-              priority
-              className="h-8 w-auto drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)]"
-            />
-          </Link>
-        </div>
+    <nav
+      className={`fixed top-0 z-50 w-full border-b font-sans transition-all duration-300 ${
+        scrolled
+          ? "h-16 border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] shadow-lg backdrop-blur"
+          : "h-20 border-transparent bg-transparent"
+      }`}
+    >
+      <div className="mx-auto h-full max-w-7xl px-4 lg:px-6 2xl:px-8">
+        <div className="flex h-full items-center justify-between">
+          {/* LOGO */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="relative block">
+              <Image
+                src="/brand/logo.svg"
+                alt="CPH Analytics Logo"
+                width={160}
+                height={40}
+                className={`h-9 w-auto transition-transform duration-300 ${
+                  !scrolled ? "scale-110" : "scale-100"
+                }`}
+                priority
+              />
+            </Link>
+          </div>
 
-        {/* Desktop nav */}
-        <nav
-          aria-label="Primary"
-          className="absolute left-1/2 hidden -translate-x-1/2 lg:block"
-        >
-          <ul className="flex items-center gap-8">
-            {NAV.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  scroll={false}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToHash(item.href);
-                  }}
-                  className={[linkBase, linkHover, topTextShadow].join(" ")}
+          {/* DESKTOP MENU */}
+          <div className="hidden items-center space-x-2 lg:flex xl:space-x-6">
+            <div className="flex items-center space-x-1">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => scrollToHash(link.href)}
+                  className="relative px-3 py-2 text-sm font-semibold text-[var(--header-text-color)] transition-colors duration-200 hover:text-[var(--accent-color)]"
                 >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Right */}
-        <div className="flex items-center gap-3">
-          <a
-            href={CLIENT_LOGIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={[ghost, topTextShadow, "hidden lg:inline-flex"].join(
-              " ",
-            )}
-          >
-            Client Login
-          </a>
-
-          <button
-            type="button"
-            onClick={() => open("Book a consultation")}
-            className={[cta, topTextShadow, "hidden lg:inline-flex"].join(" ")}
-          >
-            Book a consultation
-          </button>
-
-          {/* Mobile menu */}
-          <details className="relative lg:hidden">
-            <summary
-              aria-label="Open menu"
-              className={[
-                "flex h-9 w-9 cursor-pointer items-center justify-center rounded",
-                scrolled
-                  ? "border border-white/15 bg-white/5"
-                  : "border border-transparent bg-transparent",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]",
-                "[&::-webkit-details-marker]:hidden",
-                topTextShadow,
-              ].join(" ")}
-            >
-              {/* icon... */}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            </summary>
-
-            <div className="absolute right-0 mt-2 w-64 rounded-md border border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] p-3 text-[var(--header-text-color)] shadow-lg backdrop-blur">
-              <nav aria-label="Primary (mobile)">
-                <ul className="flex flex-col gap-1.5 text-sm">
-                  {NAV.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        scroll={false}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          scrollToHash(item.href);
-                          (
-                            e.currentTarget.closest(
-                              "details",
-                            ) as HTMLDetailsElement | null
-                          )?.removeAttribute("open");
-                        }}
-                        className="block rounded px-3 py-2 hover:bg-white/5 hover:text-[var(--blue-100)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-
-                  <li className="mt-1">
-                    <a
-                      href={CLIENT_LOGIN_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) =>
-                        (
-                          e.currentTarget.closest(
-                            "details",
-                          ) as HTMLDetailsElement | null
-                        )?.removeAttribute("open")
-                      }
-                      className="block rounded px-3 py-2 hover:bg-white/5 hover:text-[var(--blue-100)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                    >
-                      Client Login
-                    </a>
-                  </li>
-
-                  <li className="pt-2">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        (
-                          e.currentTarget.closest(
-                            "details",
-                          ) as HTMLDetailsElement | null
-                        )?.removeAttribute("open");
-                        open("Book a consultation");
-                      }}
-                      className="focus-visible:ring-[var(--accent-color)]/40 block w-full rounded-md bg-[var(--accent-color)] px-3 py-2 text-center font-semibold text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2"
-                    >
-                      Book a consultation
-                    </button>
-                  </li>
-                </ul>
-              </nav>
+                  {link.name}
+                </button>
+              ))}
             </div>
-          </details>
+
+            <div className="flex items-center gap-3 border-l border-white/10 pl-6">
+              <a
+                href={CLIENT_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20 transition-all hover:bg-white/10"
+              >
+                <LogIn className="h-4 w-4 opacity-70 group-hover:text-[var(--accent-color)]" />
+                Client Login
+              </a>
+
+              <button
+                type="button"
+                onClick={() => openBookingModal("Book a consultation")}
+                className="group flex transform items-center gap-2 rounded-full bg-[var(--accent-color)] px-6 py-2.5 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:opacity-90 hover:shadow-lg"
+              >
+                Book a consultation
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          </div>
+
+          {/* MOBILE MENU BUTTON */}
+          <div className="flex items-center lg:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-[var(--header-text-color)] transition-colors hover:text-[var(--accent-color)]"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
-    </header>
+
+      {/* MOBILE DROPDOWN */}
+      {isOpen && (
+        <div className="animate-in fade-in slide-in-from-top-4 border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] backdrop-blur-xl lg:hidden">
+          <div className="space-y-2 px-4 pb-8 pt-4">
+            {NAV_LINKS.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => scrollToHash(link.href)}
+                className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-base font-medium text-[var(--header-text-color)] hover:bg-white/5 hover:text-[var(--accent-color)]"
+              >
+                {link.name}
+                <ChevronRight className="h-4 w-4 opacity-40" />
+              </button>
+            ))}
+
+            <div className="mt-4 space-y-3 border-t border-white/10 pt-4">
+              <a
+                href={CLIENT_LOGIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20"
+              >
+                <LogIn className="h-4 w-4" />
+                Client Login
+              </a>
+
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  openBookingModal("Book a consultation");
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--accent-color)] px-4 py-4 font-bold text-white"
+              >
+                Book a consultation
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }

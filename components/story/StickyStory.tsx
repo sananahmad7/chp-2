@@ -1,9 +1,10 @@
-// components/story/StickyStory.tsx
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+// 1. Import the hook
+import { useBookingModal } from "@/components/shared/booking-modal-provider";
 
 export type Scene = {
   id: string;
@@ -16,9 +17,12 @@ export type Scene = {
 type Props = { scenes: Scene[] };
 
 export default function StickyStory({ scenes }: Props) {
-  const prefersReduced = false;
+  // 2. Initialize the modal hook
+  const { open: openBookingModal } = useBookingModal();
+
   const [active, setActive] = useState(0);
   const refs = useRef<Array<HTMLElement | null>>([]);
+
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -111,7 +115,7 @@ export default function StickyStory({ scenes }: Props) {
                         alt={s.media.alt}
                         fill
                         sizes="(min-width: 1024px) 50vw, 100vw"
-                        className="object-fit"
+                        className="object-cover"
                         priority={i === 0}
                       />
                     </div>
@@ -122,15 +126,17 @@ export default function StickyStory({ scenes }: Props) {
 
             {/* CTA at the end */}
             <motion.div
-              className="border-t border-gray-200/80 pt-6"
+              className="border-t border-gray-200/80 pt-10"
               {...fadeUp}
             >
-              <a
-                href="/contact"
-                className="inline-flex items-center rounded-md bg-emerald-500 px-5 py-3 font-medium text-white transition-colors hover:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              {/* 3. Replaced <a> with <button> and added onClick */}
+              <button
+                type="button"
+                onClick={() => openBookingModal("Book a consultation")}
+                className="inline-flex items-center rounded-full bg-emerald-500 px-8 py-4 font-semibold text-white shadow-lg transition-all hover:bg-emerald-600 hover:shadow-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95"
               >
                 Book a consultation
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>

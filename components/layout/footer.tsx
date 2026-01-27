@@ -1,9 +1,10 @@
 // components/layout/footer.tsx
 import Image from "next/image";
+import Link from "next/link";
 
 const COMPANY = {
   name: "CPH Analytics ApS",
-  reg: "DK 45351033",
+  reg: "CVR: DK 45351033",
   street: "Pladehals Allé 7",
   city: "2450 Copenhagen",
   email: "info@cphanalytics.com",
@@ -13,85 +14,67 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)]"
+      className="border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] py-14 text-[var(--header-text-color)]"
     >
-      <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8">
-        <div className="grid gap-8 md:grid-cols-12 md:items-center">
-          {/* Brand */}
-          <div className="md:col-span-5">
-            <div className="flex items-center gap-3">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+          {/* 1. Left Section: Brand & Bio */}
+          <div className="max-w-md lg:flex-1">
+            <Link
+              href="/"
+              className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+            >
               <Image
                 src="/brand/logo.svg"
-                alt=""
+                alt="CPH Analytics Logo"
                 width={44}
                 height={44}
-                className="h-9 w-auto"
-                priority={false}
+                className="h-10 w-auto"
               />
+            </Link>
+            <p className="mt-6 text-base leading-7 text-white/70">
+              Clear signals for pricing, tenders, and supply risk. We build the
+              tools that empower regulated life science teams to move from
+              evidence to action with precision and trust.
+            </p>
+          </div>
+
+          {/* 2. Right Section: Contact & Identity */}
+          <div className="flex flex-col items-start gap-8 lg:items-end lg:text-right">
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--accent-color)]">
+                Contact Information
+              </h3>
+              <address className="text-sm not-italic leading-relaxed text-white/60">
+                <p className="font-semibold text-white/90">{COMPANY.name}</p>
+                <p>{COMPANY.street}</p>
+                <p>{COMPANY.city}</p>
+                <p>{COMPANY.reg}</p>
+                <a
+                  href={`mailto:${COMPANY.email}`}
+                  className="mt-2 inline-block text-[var(--accent-color)] transition-colors hover:text-white"
+                >
+                  {COMPANY.email}
+                </a>
+              </address>
             </div>
           </div>
+        </div>
 
-          {/* Contact (from image) */}
-          <div className="md:col-span-5">
-            <address className="text-sm not-italic leading-6 text-white/80">
-              <div className="font-medium text-white/90">{COMPANY.name}</div>
-              <div>{COMPANY.reg}</div>
-              <div>{COMPANY.street}</div>
-              <div>{COMPANY.city}</div>
-              <a
-                href={`mailto:${COMPANY.email}`}
-                className="focus-visible:ring-[var(--accent-color)]/50 mt-2 inline-block text-white underline decoration-white/30 underline-offset-4 hover:decoration-white/70 focus-visible:outline-none focus-visible:ring-2"
-              >
-                {COMPANY.email}
-              </a>
-            </address>
+        {/* Bottom Bar: Clean & Minimal */}
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 md:flex-row">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-medium text-white/40">
+            <span>© {new Date().getFullYear()} CPH Analytics ApS</span>
+            <Link href="#" className="hover:text-white">
+              Privacy Policy
+            </Link>
+            <Link href="#" className="hover:text-white">
+              Terms of Use
+            </Link>
           </div>
-
-          {/* Social */}
-          <div className="md:col-span-2 md:text-right">
-            <a
-              href="#"
-              aria-label="LinkedIn"
-              className="focus-visible:ring-[var(--accent-color)]/50 inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/15 bg-white/5 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
-            >
-              {/* Simple LinkedIn-style mark */}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <rect
-                  x="3"
-                  y="3"
-                  width="18"
-                  height="18"
-                  rx="3"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  opacity="0.9"
-                />
-                <path
-                  d="M8 11v7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <circle cx="8" cy="8" r="1" fill="currentColor" />
-                <path
-                  d="M12 18v-4.2c0-1.3.8-2.1 2-2.1s2 .8 2 2.1V18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </a>
-
-            <div className="mt-3 text-xs text-white/60">
-              © {new Date().getFullYear()} CPH Analytics
-            </div>
-          </div>
+          <p className="text-[10px] uppercase tracking-[0.3em] text-white/20">
+            From signal to measured action
+          </p>
         </div>
       </div>
     </footer>

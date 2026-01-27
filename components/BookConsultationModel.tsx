@@ -68,7 +68,7 @@ export default function BookConsultationModal({
   const labelStyle = "text-xs font-semibold text-white/80";
   const helper = "text-sm text-white/70";
   const cta =
-    "inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
+    "inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
 
   return (
     <div

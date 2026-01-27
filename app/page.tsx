@@ -5,9 +5,11 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import type { CSSProperties } from "react";
 import BookConsultationModalTrigger from "@/components/BookConsultationModalTrigger";
-
+import ServicesGridWithModal from "@/components/ServicesGridWithModal";
+import ComplianceModal from "@/components/ComplianceModal";
 import HeroVideo from "@/components/HeroVideo";
 import BookDemoModalTrigger from "@/components/BookDemoModalTrigger";
+import CasesGridWithModal from "@/components/CasesGridWithModal";
 import type { Scene } from "@/components/story/StickyStory";
 
 /* -----------------------------------------------------------------------------
@@ -151,27 +153,118 @@ const pillars = [
     body: "Early warnings with drivers and granularity aligned to how teams operate: SKU / pack / chain / country.",
   },
 ] as const;
-
 const services = [
   {
     title: "Market Access & Pricing",
     body: "Model tender scenarios, manage price corridors, and support pricing cycles with explainable recommendations.",
+    details:
+      "Navigate complex Nordic pricing regulations with high-fidelity simulation models. We provide a central cockpit for managing multi-country price corridors, ensuring compliance while maximizing local market opportunity.",
+    bullets: [
+      "Competitive tender bid simulations",
+      "Denmark A-price scenario modeling",
+      "Internal & external price referencing",
+      "Margin erosion prevention alerts",
+      "Chain-specific adoption tracking",
+    ],
     href: "/life-sciences/market-access-pricing",
   },
   {
     title: "Commercial Analytics",
     body: "Brand performance, launch tracking, and KAM ready insights across Nordic free pricing chains.",
+    details:
+      "Transform raw distribution data into clear commercial signals. Our analytics engine tracks product adoption at the SKU-chain-country level, providing Key Account Managers with the evidence needed for pharmacy chain negotiations.",
+    bullets: [
+      "Real-time launch trajectory tracking",
+      "Pharmacy chain stocking compliance",
+      "Market share delta analysis",
+      "Automated weekly performance exports",
+      "Vnr/EAN level granular insights",
+    ],
     href: "/life-sciences/commercial-analytics",
   },
   {
     title: "Supply & Shortages",
     body: "Predict stock outs, monitor shortage signals, and drive proactive allocation with auditable rationale.",
+    details:
+      "Move from reactive firefighting to proactive supply management. By analyzing abrupt price moves and availability patterns, we flag SKUs with a high likelihood of shortage before they impact patients.",
+    bullets: [
+      "Next-period shortage probability scores",
+      "Availability pattern detection",
+      "Abrupt price move alerts",
+      "Distribution gap visualization",
+      "Explainable drivers for every flag",
+    ],
     href: "/life-sciences/supply-shortages",
   },
   {
     title: "Evidence & Safety",
     body: "AI assisted screening (PICO/PRISMA), RWE/HEOR support, and auditable reviews with rationale.",
+    details:
+      "Accelerate medical affairs and safety workflows with AI-assisted literature screening. Our platform supports RWE and HEOR teams by automating the initial stages of systematic reviews while maintaining a full audit trail.",
+    bullets: [
+      "Automated PICO/PRISMA screening",
+      "RWE/HEOR data aggregation",
+      "Safety signal cross-referencing",
+      "Auditable reviewer rationale",
+      "Source-linked evidence logs",
+    ],
     href: "/life-sciences/evidence-safety",
+  },
+  {
+    title: "Tender Intelligence",
+    body: "Historical bid analysis and competitor positioning for hospital and retail tenders.",
+    details:
+      "Gain a competitive edge in public procurement. We aggregate historical tender outcomes to visualize competitor pricing behavior, helping you optimize your bidding strategy for Nordic hospital tenders.",
+    bullets: [
+      "Competitor price-point mapping",
+      "Historical win/loss trend analysis",
+      "Regional demand forecasting",
+      "Automatic tender notification alerts",
+      "Post-tender impact assessment",
+    ],
+    href: "/life-sciences/tender-intelligence",
+  },
+  {
+    title: "RWE Data Engineering",
+    body: "Dependable pipelines for Real World Evidence and HEOR data synthesis.",
+    details:
+      "High-quality evidence starts with clean data. We build auditable engineering pipelines that ingest disparate healthcare data sources, transforming them into study-ready datasets for RWE and Health Economics.",
+    bullets: [
+      "Standardized OMOD/CDM mapping",
+      "Audit-friendly data transformations",
+      "Automated QC & validation reporting",
+      "Secure GxP-compliant storage",
+      "Lineage tracking from source to study",
+    ],
+    href: "/life-sciences/rwe-engineering",
+  },
+  {
+    title: "Regulatory Intelligence",
+    body: "Track Vnr/EAN changes, MA transfers, and withdrawal signals across the Nordics.",
+    details:
+      "Stay ahead of administrative changes that impact market availability. Our bots monitor regulatory portals to flag MA transfers and withdrawal signals before they disrupt your commercial supply chain.",
+    bullets: [
+      "MA Transfer monitoring (Denmark/Sweden)",
+      "Vnr/EAN metadata change logs",
+      "Withdrawal intention early-signals",
+      "Regulatory timeline visualizations",
+      "Direct source-document linking",
+    ],
+    href: "/life-sciences/regulatory-intelligence",
+  },
+  {
+    title: "Pharmacy Chain Strategy",
+    body: "Pricing and availability dynamics specifically for private retail chain negotiations.",
+    details:
+      "Level the playing field with large pharmacy chains. We provide the sell-out and stock-level visibility needed to hold chains accountable to their distribution agreements and pricing corridors.",
+    bullets: [
+      "Private label entry alerts",
+      "Chain-specific inventory visibility",
+      "Stock-out penalty audit support",
+      "Price compliance monitoring",
+      "Retail margin erosion analysis",
+    ],
+    href: "/life-sciences/pharmacy-strategy",
   },
 ] as const;
 
@@ -180,6 +273,8 @@ const cases = [
     title: "A price tender simulator (Denmark)",
     summary:
       "Compared bid options by win probability, expected turnover, and margin using competitive price distributions.",
+    details:
+      "Using historical bid data from Amgros, we built a Monte Carlo simulation tool. It allows users to input their production costs and desired margin to see a 'heat map' of win probabilities against various bid levels, specifically optimized for the Danish A-price sealed bid system.",
     impact: "Better decisions without unnecessary margin erosion.",
     href: "/work/a-price-simulator",
     image: {
@@ -191,6 +286,8 @@ const cases = [
     title: "Shortage early-warning for distributor",
     summary:
       "Signals for shortages and returns across regions and vendors with SKU level explainability.",
+    details:
+      "By aggregating inventory snapshots across four Nordic warehouses, the system detects 'velocity spikes' and distribution gaps. It flags potential stock-outs 14 days before they occur, providing KAMs with an auditable rationale for proactive allocation.",
     impact: "Faster interventions and fewer stock outs.",
     href: "/work/shortage-early-warning",
     image: {
@@ -202,12 +299,27 @@ const cases = [
     title: "Veterinary price intelligence (SE/NO)",
     summary:
       "Continuous price checks across pharmacy chains with traceability and last checked timestamps.",
+    details:
+      "A custom web-scraping engine that monitors the leading veterinary pharmacy chains in Sweden and Norway. It provides a daily 'price corridor' report, ensuring that wholesale pricing remains competitive while tracking OTC retail markups.",
     impact:
       "Clear pricing corridors and improved compliance across assortments.",
     href: "/work/vet-pricing-intelligence",
     image: {
       src: "https://images.pexels.com/photos/6251701/pexels-photo-6251701.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6251701.jpg&fm=jpg",
       alt: "Veterinarian examining a dog in a clinic",
+    },
+  },
+  {
+    title: "Commercial Launch Tracker",
+    summary:
+      "Real-time adoption metrics for new-to-market generic entries in the Finnish market.",
+    details:
+      "This tool tracks the 'speed of stocking' across private pharmacy chains. It provides manufacturers with immediate feedback on which retailers are meeting their listing agreements during the critical first 30 days of launch.",
+    impact: "Immediate identification of listing gaps and improved launch ROI.",
+    href: "/work/launch-tracker",
+    image: {
+      src: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
+      alt: "Group of professionals in a meeting",
     },
   },
 ] as const;
@@ -261,35 +373,38 @@ function SectionHeader({
 export default function Home() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section
         aria-labelledby="hero-heading"
-        className="border-5 relative isolate min-h-[72vh] overflow-hidden border-red-900 sm:min-h-[76vh] lg:min-h-[78vh]"
+        className="relative isolate min-h-[68vh] w-full overflow-y-hidden overflow-x-clip sm:min-h-[72vh] lg:min-h-[74vh]"
       >
-        <HeroVideo
-          poster="/video/lsp-hero-poster.webp"
-          sources={[
-            { src: "/video/lsp-hero.webm", type: "video/webm" },
-            { src: "/video/lsp-hero.mp4", type: "video/mp4" },
-          ]}
-          className="scale-[1.28] sm:scale-[1.32] lg:scale-[1.36]"
-          objectPosition="center 85%"
-        />
+        {/* Put video in an overflow-hidden wrapper so scaling can’t create horizontal scroll */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <HeroVideo
+            poster="/video/lsp-hero-poster.webp"
+            sources={[
+              { src: "/video/lsp-hero.webm", type: "video/webm" },
+              { src: "/video/lsp-hero.mp4", type: "video/mp4" },
+            ]}
+            className="h-full w-full scale-[1.1] object-cover sm:scale-[1.28] lg:scale-[1.34]"
+            objectPosition="center 85%"
+          />
 
-        {/* Readability scrim above video but below content */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-[5] bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,51,0.48))]"
-        />
-
-        <div className="mx-auto max-w-7xl px-6 pb-10 pt-16 sm:px-8 sm:pb-12 sm:pt-20 md:pb-16 md:pt-24">
+          {/* Readability scrim */}
           <div
-            className="grid min-h-[clamp(420px,56vh,640px)] items-stretch gap-6 lg:grid-cols-12 lg:gap-8"
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,51,0.48))]"
+          />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-8 sm:pb-12 sm:pt-20 md:pb-14 md:pt-24">
+          <div
+            className="grid min-h-[clamp(380px,52vh,600px)] w-full min-w-0 max-w-full items-stretch gap-6 lg:grid-cols-12 lg:gap-8"
             style={heroGridStyle}
           >
-            {/* Left: value prop */}
-            <div className="lg:col-span-7 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
-              <div className="relative flex h-full max-w-2xl flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm sm:p-7">
+            {/* Left */}
+            <div className="min-w-0 lg:col-span-7 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
+              <div className="relative flex h-full w-full min-w-0 max-w-full flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm sm:max-w-2xl sm:p-7">
                 <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
                   <span
                     className="h-2 w-2 rounded-full bg-[var(--accent-color)]"
@@ -316,7 +431,6 @@ export default function Home() {
                   trust.
                 </p>
 
-                {/* Strong marketing bullets (no fake metrics) */}
                 <ul className="mt-5 space-y-2 text-sm text-white/80 sm:mt-6">
                   <li>
                     • Source linked observations and audit friendly exports
@@ -329,16 +443,15 @@ export default function Home() {
                 </ul>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7 sm:gap-4">
-                  <BookDemoModalTrigger
+                  <BookConsultationModalTrigger
                     label="Book a demo"
-                    bookingUrl={DEMO_BOOKING_URL}
-                    embedCalendly={false}
+                    title="Schedule a walkthrough"
                     className="inline-flex items-center rounded-full bg-[var(--primary-color)] px-6 py-[0.85rem] text-base font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
                   />
 
                   <a
                     href="#lsp-story-heading"
-                    className="inline-flex items-center text-white/90 underline decoration-white/50 underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                    className="inline-flex items-center whitespace-normal break-words text-white/90 underline decoration-white/50 underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
                   >
                     See the platform story →
                   </a>
@@ -353,17 +466,15 @@ export default function Home() {
                     <li>ISO 27001 / GDPR-ready</li>
                   </ul>
                 </div>
-
-                <p className="sr-only">
-                  Background shows an aerial of Copenhagen, signaling a high
-                  level overview for decision making.
-                </p>
               </div>
             </div>
 
-            {/* Right: marketing-first map panel (client-only) */}
-            <div className="relative mt-6 lg:col-span-5 lg:mt-0 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
-              <HeroRightMap initialCountry="DK" className="h-full w-full" />
+            {/* Right */}
+            <div className="relative mt-6 min-w-0 overflow-hidden lg:col-span-5 lg:mt-0 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
+              <HeroRightMap
+                initialCountry="DK"
+                className="h-full w-full max-w-full"
+              />
             </div>
           </div>
         </div>
@@ -386,9 +497,6 @@ export default function Home() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </span>
-                <span className="sr-only">
-                  Scroll to learn what’s inside the platform
                 </span>
               </div>
             </div>
@@ -509,40 +617,23 @@ export default function Home() {
       {/* Services */}
       <section
         id="services"
-        aria-labelledby="services-heading"
         className="scroll-mt-24 border-t border-[var(--border-color)]"
       >
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <SectionHeader
-            title="Services for life sciences"
-            subtitle="From market access to supply risk: pragmatic analytics, dependable engineering, and explainable models."
-            ctaHref="/life-sciences"
-            ctaText="Explore services"
-          />
-
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {services.map((s) => (
-              <article
-                key={s.title}
-                className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
-              >
-                <h3 className="text-lg font-medium text-[var(--text-color)]">
-                  {s.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-text)]">
-                  {s.body}
-                </p>
-                <div className="mt-4">
-                  <Link
-                    href={s.href}
-                    className="text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                  >
-                    Learn more →
-                  </Link>
-                </div>
-              </article>
-            ))}
+          <div className="mb-10 flex items-end justify-between gap-6">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl">
+                Services for life sciences
+              </h2>
+              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+                From market access to supply risk: pragmatic analytics,
+                dependable engineering, and explainable models.
+              </p>
+            </div>
+            {/* We don't need the button here anymore, it's inside the component */}
           </div>
+
+          <ServicesGridWithModal services={services} />
         </div>
       </section>
 
@@ -552,13 +643,25 @@ export default function Home() {
         className="border-t border-[var(--border-color)]"
       >
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <SectionHeader
-            title="Validated for regulated environments"
-            subtitle="Audit trails, role based access, lineage, and monitoring, delivered with governance that fits life-science workflows."
-            ctaHref="/life-sciences/compliance"
-            ctaText="Read compliance"
-          />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2
+                id="compliance-heading"
+                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+              >
+                Validated for regulated environments
+              </h2>
+              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+                Audit trails, role based access, lineage, and monitoring,
+                delivered with governance that fits life-science workflows.
+              </p>
+            </div>
 
+            {/* TRIGGER COMPONENT */}
+            <ComplianceModal />
+          </div>
+
+          {/* DATA REMAINS IN THE SECTION AS REQUESTED */}
           <ul className="mt-10 grid grid-cols-1 gap-3 text-sm text-[var(--muted-text)] sm:grid-cols-2 lg:grid-cols-3">
             {[
               "GxP-aware workflows & e-record audit trails",
@@ -570,9 +673,10 @@ export default function Home() {
             ].map((item) => (
               <li
                 key={item}
-                className="rounded-lg border border-[var(--border-color)] bg-[var(--surface)] p-4"
+                className="rounded-lg border border-[var(--border-color)] bg-white p-4 shadow-sm"
               >
-                • {item}
+                <span className="mr-2 text-[var(--accent-color)]">•</span>
+                {item}
               </li>
             ))}
           </ul>
@@ -581,56 +685,28 @@ export default function Home() {
 
       {/* Cases */}
       <section
+        id="cases"
         aria-labelledby="cases-heading"
         className="border-t border-[var(--border-color)]"
       >
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <SectionHeader
-            title="Selected work"
-            subtitle="Focused engagements across manufacturers, distributors, and animal health."
-            ctaHref="/work"
-            ctaText="View all"
-          />
-
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {cases.map((c, idx) => (
-              <article
-                key={c.title}
-                className="group overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--surface)]"
+          <div className="mb-10 flex items-end justify-between gap-6">
+            <div>
+              <h2
+                id="cases-heading"
+                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
               >
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <Image
-                    src={c.image.src}
-                    alt={c.image.alt}
-                    fill
-                    sizes="(min-width: 1024px) 33vw, 100vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                    priority={idx === 0}
-                  />
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-lg font-medium text-[var(--text-color)]">
-                    {c.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-[var(--muted-text)]">
-                    {c.summary}
-                  </p>
-                  <p className="mt-2 text-sm text-[var(--muted-text)]">
-                    {c.impact}
-                  </p>
-                  <div className="mt-4">
-                    <Link
-                      href={c.href}
-                      className="text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                    >
-                      Read the case →
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
+                Selected work
+              </h2>
+              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+                Focused engagements across manufacturers, distributors, and
+                animal health.
+              </p>
+            </div>
+            {/* The button is now inside CasesGridWithModal */}
           </div>
+
+          <CasesGridWithModal cases={cases} />
         </div>
       </section>
 
@@ -736,12 +812,11 @@ export default function Home() {
                 className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
               />
 
-              <Link
-                href="/solutions/life-science-pro"
-                className="inline-flex items-center rounded-md px-5 py-3 text-[var(--text-color)] ring-1 ring-[var(--border-color)] transition hover:ring-[var(--gray-500)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-              >
-                Explore the platform
-              </Link>
+              <BookConsultationModalTrigger
+                label="Book a Consultation"
+                title="Book a Consultation"
+                className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+              />
             </div>
 
             <p className="mt-4 text-sm text-[var(--muted-text)]">
