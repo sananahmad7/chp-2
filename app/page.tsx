@@ -11,6 +11,8 @@ import HeroVideo from "@/components/HeroVideo";
 import BookDemoModalTrigger from "@/components/BookDemoModalTrigger";
 import CasesGridWithModal from "@/components/CasesGridWithModal";
 import type { Scene } from "@/components/story/StickyStory";
+import FadeIn from "@/components/shared/FadeIn";
+import FadeInRight from "@/components/shared/FadeInRight";
 
 /* -----------------------------------------------------------------------------
  * SEO
@@ -511,26 +513,28 @@ export default function Home() {
         className="scroll-mt-24 border-t border-[var(--border-color)] "
       >
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <SectionHeader
-            title="Built for regulated life science teams"
-            subtitle="A marketing homepage shouldn’t pretend to be a live dashboard. Instead: show coverage, capability, and why you’re credible."
-          />
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {pillars.map((p) => (
-              <article
-                key={p.title}
-                className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
-              >
-                <h3 className="text-lg font-medium text-[var(--text-color)]">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--muted-text)]">
-                  {p.body}
-                </p>
-              </article>
-            ))}
-          </div>
+          <FadeIn>
+            <SectionHeader
+              title="Built for regulated life science teams"
+              subtitle="A marketing homepage shouldn’t pretend to be a live dashboard. Instead: show coverage, capability, and why you’re credible."
+            />
 
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {pillars.map((p) => (
+                <article
+                  key={p.title}
+                  className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
+                >
+                  <h3 className="text-lg font-medium text-[var(--text-color)]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-[var(--muted-text)]">
+                    {p.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </FadeIn>
           <div className="mt-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 sm:p-8">
             <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-8">
@@ -562,35 +566,39 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
           <div className="grid items-start gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <h2
-                id="lsp-heading"
-                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
-              >
-                Pharma insights with Life Science Pro
-              </h2>
-              <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
-                Track Nordic moves, launches, withdrawals, returns, supply gaps,
-                and retail price shifts, plus next-period shortage risk, across
-                free pricing chains for human and veterinary products. Sales
-                data is available in Denmark.
-              </p>
-              <p className="mt-6 text-sm text-[var(--muted-text)]">
-                Below is a short story showing how teams go from signals to
-                actions.
-              </p>
+              <FadeIn>
+                <h2
+                  id="lsp-heading"
+                  className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                >
+                  Pharma insights with Life Science Pro
+                </h2>
+                <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
+                  Track Nordic moves, launches, withdrawals, returns, supply
+                  gaps, and retail price shifts, plus next-period shortage risk,
+                  across free pricing chains for human and veterinary products.
+                  Sales data is available in Denmark.
+                </p>
+                <p className="mt-6 text-sm text-[var(--muted-text)]">
+                  Below is a short story showing how teams go from signals to
+                  actions.
+                </p>
+              </FadeIn>
             </div>
 
             <div className="lg:col-span-5">
               <figure className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--surface)]">
-                <div className="relative aspect-[16/10] w-full">
-                  <Image
-                    src="/images/one.jpg"
-                    alt="Illustrative Life Science Pro overview with ATC and pack context"
-                    fill
-                    sizes="(min-width: 1024px) 40vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
+                <FadeInRight>
+                  <div className="relative aspect-[16/10] w-full">
+                    <Image
+                      src="/images/one.jpg"
+                      alt="Illustrative Life Science Pro overview with ATC and pack context"
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>{" "}
+                </FadeInRight>
               </figure>
             </div>
           </div>
@@ -719,67 +727,71 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <h2
-                id="about-heading"
-                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
-              >
-                About us
-              </h2>
+              <FadeIn>
+                <h2
+                  id="about-heading"
+                  className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                >
+                  About us
+                </h2>
 
-              <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
-                CPH Analytics is an independent analytics consultancy. We help
-                lifescience teams move from raw data to confident decisions,
-                combining pragmatic strategy with dependable engineering and
-                applied AI.
-              </p>
+                <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
+                  CPH Analytics is an independent analytics consultancy. We help
+                  lifescience teams move from raw data to confident decisions,
+                  combining pragmatic strategy with dependable engineering and
+                  applied AI.
+                </p>
 
-              <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-[var(--muted-text)] sm:grid-cols-2">
-                {[
-                  "Evidenc based, measurable outcomes",
-                  "Clear roadmaps and fast iterations",
-                  "Robust data pipelines & decision surfaces",
-                  "Explainable models with monitoring",
-                ].map((t) => (
-                  <li
-                    key={t}
-                    className="rounded-lg border border-[var(--border-color)] bg-[var(--surface)] p-4"
-                  >
-                    • {t}
-                  </li>
-                ))}
-              </ul>
+                <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-[var(--muted-text)] sm:grid-cols-2">
+                  {[
+                    "Evidenc based, measurable outcomes",
+                    "Clear roadmaps and fast iterations",
+                    "Robust data pipelines & decision surfaces",
+                    "Explainable models with monitoring",
+                  ].map((t) => (
+                    <li
+                      key={t}
+                      className="rounded-lg border border-[var(--border-color)] bg-[var(--surface)] p-4"
+                    >
+                      • {t}
+                    </li>
+                  ))}
+                </ul>
 
-              <div className="mt-6">
-                <BookDemoModalTrigger
-                  label="Talk to a life science data lead"
-                  bookingUrl={DEMO_BOOKING_URL}
-                  embedCalendly={false}
-                  className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                />
-              </div>
+                <div className="mt-6">
+                  <BookDemoModalTrigger
+                    label="Talk to a life science data lead"
+                    bookingUrl={DEMO_BOOKING_URL}
+                    embedCalendly={false}
+                    className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                  />
+                </div>
+              </FadeIn>
             </div>
 
             <aside className="lg:col-span-5">
-              <figure className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--surface)]">
-                <div className="relative aspect-[4/5] w-full">
-                  <Image
-                    src="/images/people/you.jpg"
-                    alt="Headshot"
-                    fill
-                    sizes="(min-width: 1024px) 320px, 60vw"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <figcaption className="px-5 py-4">
-                  <div className="text-sm font-medium text-[var(--text-color)]">
-                    David A. Seiler-Holm
+              <FadeInRight>
+                <figure className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--surface)]">
+                  <div className="relative aspect-[4/5] w-full">
+                    <Image
+                      src="/images/people/you.jpg"
+                      alt="Headshot"
+                      fill
+                      sizes="(min-width: 1024px) 320px, 60vw"
+                      className="object-cover"
+                      priority
+                    />
                   </div>
-                  <div className="text-sm text-[var(--muted-text)]">
-                    Managing Partner
-                  </div>
-                </figcaption>
-              </figure>
+                  <figcaption className="px-5 py-4">
+                    <div className="text-sm font-medium text-[var(--text-color)]">
+                      David A. Seiler-Holm
+                    </div>
+                    <div className="text-sm text-[var(--muted-text)]">
+                      Managing Partner
+                    </div>
+                  </figcaption>
+                </figure>
+              </FadeInRight>
             </aside>
           </div>
         </div>
