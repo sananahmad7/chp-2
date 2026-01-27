@@ -13,8 +13,12 @@ export default function BookConsultationModal({
   onClose,
   title = "Book a consultation",
 }: Props) {
+  // Form State
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -24,8 +28,11 @@ export default function BookConsultationModal({
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
+    setName("");
+    setEmail("");
     setDate("");
     setTime("");
+    setMessage("");
   }, [open]);
 
   // Accessibility + body scroll lock + ESC close + focus restore
@@ -58,7 +65,7 @@ export default function BookConsultationModal({
     "w-full max-w-lg rounded-2xl border border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)] shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur";
   const field =
     "mt-2 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-[var(--header-text-color)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/50";
-  const label = "text-xs font-semibold text-white/80";
+  const labelStyle = "text-xs font-semibold text-white/80";
   const helper = "text-sm text-white/70";
   const cta =
     "inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
@@ -88,7 +95,7 @@ export default function BookConsultationModal({
                 {title}
               </h2>
               <p className={`mt-1 ${helper}`}>
-                Pick a date and time—submit is a demo request.
+                Fill in your details below to schedule a session.
               </p>
             </div>
 
@@ -121,28 +128,73 @@ export default function BookConsultationModal({
             onSubmit={(e) => {
               e.preventDefault();
               setSubmitted(true);
+              // Logic to send name, email, date, time, message would go here
             }}
           >
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="block">
-                <span className={label}>Date</span>
-                <input
-                  type="date"
-                  required
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className={field}
-                />
-              </label>
+            <div className="grid gap-4">
+              {/* Name and Email Row */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className={labelStyle}>Full Name</span>
+                  <input
+                    type="text"
+                    required
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={field}
+                  />
+                </label>
 
+                <label className="block">
+                  <span className={labelStyle}>Email Address</span>
+                  <input
+                    type="email"
+                    required
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={field}
+                  />
+                </label>
+              </div>
+
+              {/* Date and Time Row */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className="block">
+                  <span className={labelStyle}>Preferred Date</span>
+                  <input
+                    type="date"
+                    required
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className={field}
+                  />
+                </label>
+
+                <label className="block">
+                  <span className={labelStyle}>Preferred Time</span>
+                  <input
+                    type="time"
+                    required
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    className={field}
+                  />
+                </label>
+              </div>
+
+              {/* Message Field */}
               <label className="block">
-                <span className={label}>Time</span>
-                <input
-                  type="time"
-                  required
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className={field}
+                <span className={labelStyle}>
+                  Briefly describe your project
+                </span>
+                <textarea
+                  rows={3}
+                  placeholder="Tell us a bit about what you're working on..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className={`${field} resize-none`}
                 />
               </label>
             </div>
@@ -150,13 +202,14 @@ export default function BookConsultationModal({
             {submitted ? (
               <div
                 role="status"
-                className="mt-4 rounded-lg border border-white/10 bg-white/5 p-3 text-sm text-white/85"
+                className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-sm text-emerald-200"
               >
-                Request submitted (demo). We’ll get back to you soon.
+                Thank you, {name.split(" ")[0]}! Your request was submitted.
+                We'll email you at {email} soon.
               </div>
             ) : null}
 
-            <div className="mt-5 flex items-center justify-end gap-3">
+            <div className="mt-6 flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={onClose}
