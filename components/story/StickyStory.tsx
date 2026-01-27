@@ -48,7 +48,7 @@ export default function StickyStory({ scenes }: Props) {
   );
 
   return (
-    <div className="relative bg-transparent">
+    <div className="relative bg-transparent font-inter">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:px-8">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           {/* Pinned progress */}
@@ -89,7 +89,7 @@ export default function StickyStory({ scenes }: Props) {
               >
                 <motion.h3
                   id={`${s.id}-title`}
-                  className="text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl"
+                  className="font-display text-3xl font-semibold tracking-wide text-gray-900 md:text-4xl"
                   {...fadeUp}
                 >
                   {s.title}

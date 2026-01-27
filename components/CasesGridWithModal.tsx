@@ -47,7 +47,7 @@ export default function CasesGridWithModal({
   }, [open, allOpen]);
 
   return (
-    <div className="relative">
+    <div className="relative font-inter">
       {/* 1. Header Trigger */}
       <div className="absolute -top-16 right-0 sm:-top-20">
         <button
@@ -74,7 +74,7 @@ export default function CasesGridWithModal({
               />
             </div>
             <div className="p-6">
-              <h3 className="text-lg font-medium text-[var(--text-color)]">
+              <h3 className="font-display text-lg font-medium tracking-wide text-[var(--text-color)]">
                 {c.title}
               </h3>
               <p className="mt-2 line-clamp-2 text-sm text-[var(--muted-text)]">
@@ -105,7 +105,7 @@ export default function CasesGridWithModal({
           />
           <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 p-6">
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h2 className="font-display text-2xl font-bold tracking-wide text-slate-900">
                 Selected Case Studies
               </h2>
               <button
@@ -132,7 +132,9 @@ export default function CasesGridWithModal({
                     onClick={() => openModal(c)}
                     className="flex flex-col items-start rounded-xl border border-slate-100 p-4 text-left transition-all hover:bg-slate-50"
                   >
-                    <span className="font-bold text-slate-900">{c.title}</span>
+                    <span className="font-display font-bold tracking-wide text-slate-900">
+                      {c.title}
+                    </span>
                     <span className="mt-1 line-clamp-2 text-xs text-slate-500">
                       {c.summary}
                     </span>
@@ -167,7 +169,7 @@ export default function CasesGridWithModal({
 
             <div className="p-8 pt-0">
               <div className="flex items-start justify-between">
-                <h2 className="text-2xl font-bold text-slate-900">
+                <h2 className="font-display text-2xl font-bold tracking-wide text-slate-900">
                   {active.title}
                 </h2>
                 <button
@@ -189,7 +191,7 @@ export default function CasesGridWithModal({
 
               <div className="mt-6 space-y-6">
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--accent-color)]">
+                  <h4 className="font-display text-xs font-bold uppercase tracking-wide text-[var(--accent-color)]">
                     Background
                   </h4>
                   <p className="mt-2 leading-relaxed text-slate-700">
@@ -198,7 +200,7 @@ export default function CasesGridWithModal({
                 </div>
 
                 <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500">
+                  <h4 className="font-display text-xs font-bold uppercase tracking-wide text-slate-500">
                     The Impact
                   </h4>
                   <p className="mt-2 font-medium text-slate-900">

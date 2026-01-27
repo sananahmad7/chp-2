@@ -62,36 +62,40 @@ export default function BookConsultationModal({
 
   // Theme-aligned styles
   const modalPanel =
-    "w-full max-w-lg rounded-2xl border border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)] shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur";
+    "w-full max-w-lg rounded-2xl border border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)] shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur font-inter";
   const field =
-    "mt-2 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-[var(--header-text-color)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/50";
-  const labelStyle = "text-xs font-semibold text-white/80";
-  const helper = "text-sm text-white/70";
+    "mt-2 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-[var(--header-text-color)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/50 font-inter";
+  const labelStyle = "text-xs font-semibold text-white/80 font-inter";
+  const helper = "text-sm text-white/70 font-inter";
   const cta =
-    "inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40";
+    "inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40 font-inter";
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 font-inter"
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-title"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose(); // click-outside
-      }}
     >
-      {/* backdrop */}
-      <div className="absolute inset-0 bg-black/60" aria-hidden />
+      {/* 1. BACKDROP: Clicking this will close the modal */}
+      <div
+        className="absolute inset-0 bg-black/60 transition-opacity"
+        aria-hidden="true"
+        onClick={onClose}
+      />
 
-      {/* panel */}
+      {/* 2. PANEL: stopPropagation ensures clicks inside the form don't close it */}
       <div
         className="relative w-full max-w-lg"
-        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className={modalPanel}>
           <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
             <div>
-              <h2 id="booking-title" className="text-lg font-semibold">
+              <h2
+                id="booking-title"
+                className="font-display text-lg font-semibold tracking-normal"
+              >
                 {title}
               </h2>
               <p className={`mt-1 ${helper}`}>
@@ -128,11 +132,9 @@ export default function BookConsultationModal({
             onSubmit={(e) => {
               e.preventDefault();
               setSubmitted(true);
-              // Logic to send name, email, date, time, message would go here
             }}
           >
             <div className="grid gap-4">
-              {/* Name and Email Row */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className={labelStyle}>Full Name</span>
@@ -159,7 +161,6 @@ export default function BookConsultationModal({
                 </label>
               </div>
 
-              {/* Date and Time Row */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className={labelStyle}>Preferred Date</span>
@@ -184,7 +185,6 @@ export default function BookConsultationModal({
                 </label>
               </div>
 
-              {/* Message Field */}
               <label className="block">
                 <span className={labelStyle}>
                   Briefly describe your project
@@ -202,10 +202,10 @@ export default function BookConsultationModal({
             {submitted ? (
               <div
                 role="status"
-                className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-sm text-emerald-200"
+                className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 font-inter text-sm text-emerald-200"
               >
                 Thank you, {name.split(" ")[0]}! Your request was submitted.
-                We'll email you at {email} soon.
+                We&apos;ll email you at {email} soon.
               </div>
             ) : null}
 
@@ -213,7 +213,7 @@ export default function BookConsultationModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="focus-visible:ring-[var(--accent-color)]/40 inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
+                className="focus-visible:ring-[var(--accent-color)]/40 inline-flex items-center rounded-md px-4 py-2 font-inter text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
               >
                 Cancel
               </button>

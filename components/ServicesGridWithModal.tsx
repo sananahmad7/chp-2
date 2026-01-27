@@ -47,7 +47,7 @@ export default function ServicesGridWithModal({
   }, [open, allOpen]);
 
   return (
-    <div className="relative">
+    <div className="relative font-inter">
       {/* 1. Header Trigger (Internalized) */}
       <div className="absolute -top-16 right-0 sm:-top-20">
         <button
@@ -65,7 +65,7 @@ export default function ServicesGridWithModal({
             key={s.title}
             className="group flex flex-col rounded-2xl border border-blue-100 bg-white p-7 shadow-sm transition-all hover:border-blue-200 hover:shadow-md"
           >
-            <h3 className="text-xl font-bold text-slate-900 group-hover:text-[var(--accent-color)]">
+            <h3 className="font-display text-xl font-bold tracking-wide text-slate-900 group-hover:text-[var(--accent-color)]">
               {s.title}
             </h3>
             <p className="mt-3 text-sm leading-6 text-slate-600">{s.body}</p>
@@ -93,7 +93,7 @@ export default function ServicesGridWithModal({
           />
           <div className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 p-6 sm:px-8">
-              <h2 className="text-2xl font-bold text-slate-900">
+              <h2 className="font-display text-2xl font-bold tracking-wide text-slate-900">
                 All Solutions
               </h2>
               <button
@@ -120,7 +120,9 @@ export default function ServicesGridWithModal({
                     onClick={() => openModal(s)}
                     className="hover:border-[var(--accent-color)]/40 flex flex-col items-start rounded-xl border border-slate-100 p-5 text-left transition-all hover:bg-slate-50"
                   >
-                    <span className="font-bold text-slate-900">{s.title}</span>
+                    <span className="font-display font-bold tracking-wide text-slate-900">
+                      {s.title}
+                    </span>
                     <span className="mt-1 line-clamp-2 text-sm text-slate-500">
                       {s.body}
                     </span>
@@ -145,14 +147,15 @@ export default function ServicesGridWithModal({
           <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
             <div className="flex items-start justify-between border-b border-slate-100 p-6 sm:p-8">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--accent-color)]">
+                <span className="font-display text-[10px] font-bold uppercase tracking-wide text-[var(--accent-color)]">
                   Service Detail
                 </span>
-                <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
+                <h2 className="mt-2 font-display text-2xl font-bold tracking-wide text-slate-900 sm:text-3xl">
                   {active.title}
                 </h2>
               </div>
               <button
+                ref={closeBtnRef}
                 onClick={closeModal}
                 className="text-slate-400 hover:text-slate-600"
               >
@@ -174,7 +177,7 @@ export default function ServicesGridWithModal({
                   {active.details}
                 </p>
                 <div className="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <h4 className="font-display text-xs font-bold uppercase tracking-wide text-slate-500">
                     Key Capabilities
                   </h4>
                   <ul className="mt-4 grid gap-3 sm:grid-cols-2">

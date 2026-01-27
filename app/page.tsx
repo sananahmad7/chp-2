@@ -78,7 +78,7 @@ const HeroRightMap = dynamic(() => import("@/components/HeroRightMap"), {
 const StickyStory = dynamic(() => import("@/components/story/StickyStory"), {
   ssr: false,
   loading: () => (
-    <div className="mx-auto max-w-7xl px-6 py-24 text-center text-[var(--muted-text)]">
+    <div className="mx-auto max-w-7xl px-6 py-24 text-center font-inter text-[var(--muted-text)]">
       Loading story...
     </div>
   ),
@@ -155,6 +155,7 @@ const pillars = [
     body: "Early warnings with drivers and granularity aligned to how teams operate: SKU / pack / chain / country.",
   },
 ] as const;
+
 const services = [
   {
     title: "Market Access & Pricing",
@@ -285,7 +286,7 @@ const cases = [
     },
   },
   {
-    title: "Shortage early-warning for distributor",
+    title: "Shortage early-warning for distributor)",
     summary:
       "Signals for shortages and returns across regions and vendors with SKU level explainability.",
     details:
@@ -348,18 +349,20 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl">
+        <h2 className="font-display text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
           {title}
         </h2>
         {subtitle ? (
-          <p className="mt-2 max-w-2xl text-[var(--muted-text)]">{subtitle}</p>
+          <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
+            {subtitle}
+          </p>
         ) : null}
       </div>
 
       {ctaHref && ctaText ? (
         <Link
           href={ctaHref}
-          className="hidden text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] sm:inline"
+          className="hidden font-inter text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] sm:inline"
         >
           {ctaText} →
         </Link>
@@ -406,34 +409,21 @@ export default function Home() {
           >
             {/* Left */}
             <div className="min-w-0 lg:col-span-7 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
-              <div className="relative flex h-full w-full min-w-0 max-w-full flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm sm:max-w-2xl sm:p-7">
-                <p className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white ring-1 ring-white/20">
-                  <span
-                    className="h-2 w-2 rounded-full bg-[var(--accent-color)]"
-                    aria-hidden
-                  />
-                  <Link
-                    href="/life-sciences"
-                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-                  >
-                    Life Sciences
-                  </Link>
-                </p>
-
+              <div className="relative mt-5 flex h-full w-full min-w-0 max-w-full flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm  sm:p-7 lg:mt-0">
                 <h1
                   id="hero-heading"
-                  className="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
+                  className="mt-3 font-display text-4xl font-bold leading-tight tracking-wide text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
                 >
                   Price &amp; tender overview for Nordic pharma
                 </h1>
 
-                <p className="mt-4 max-w-prose text-base leading-7 text-white/85 sm:mt-5 sm:text-lg">
+                <p className="mt-4 max-w-prose font-inter text-base leading-7 text-white/80 sm:mt-5 sm:text-lg">
                   Clear signals for pricing, tenders, and supply risk, delivered
                   with traceability and explainability that regulated teams can
                   trust.
                 </p>
 
-                <ul className="mt-5 space-y-2 text-sm text-white/80 sm:mt-6">
+                <ul className="mt-5 space-y-2 font-inter text-sm text-white/80 sm:mt-6">
                   <li>
                     • Source linked observations and audit friendly exports
                   </li>
@@ -444,11 +434,11 @@ export default function Home() {
                   <li>• Shortage signals with explainable drivers</li>
                 </ul>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7 sm:gap-4">
+                <div className="mt-6 flex flex-wrap items-center gap-3 font-inter sm:mt-7 sm:gap-4">
                   <BookConsultationModalTrigger
                     label="Book a demo"
                     title="Schedule a walkthrough"
-                    className="inline-flex items-center rounded-full bg-[var(--primary-color)] px-6 py-[0.85rem] text-base font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
+                    className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-6 py-[0.85rem] text-base font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
                   />
 
                   <a
@@ -459,13 +449,13 @@ export default function Home() {
                   </a>
                 </div>
 
-                <div className="mt-auto pt-5 sm:pt-6">
+                <div className="mt-auto pt-5 font-inter sm:pt-6">
                   <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/75">
                     <li>Nordic coverage</li>
                     <li className="hidden sm:inline">•</li>
                     <li>Traceable signals</li>
                     <li className="hidden sm:inline">•</li>
-                    <li>ISO 27001 / GDPR-ready</li>
+                    <li>ISO 27001 / GDPR ready</li>
                   </ul>
                 </div>
               </div>
@@ -477,30 +467,6 @@ export default function Home() {
                 initialCountry="DK"
                 className="h-full w-full max-w-full"
               />
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll hint */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 sm:bottom-6">
-          <div className="mx-auto max-w-7xl px-6 sm:px-8">
-            <div className="grid lg:grid-cols-12">
-              <div className="flex lg:col-span-7 xl:col-span-6">
-                <span
-                  aria-hidden
-                  className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 text-white/70 ring-1 ring-white/15 backdrop-blur-sm"
-                >
-                  <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none">
-                    <path
-                      d="M5 8l5 5 5-5"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -519,31 +485,32 @@ export default function Home() {
               subtitle="A marketing homepage shouldn’t pretend to be a live dashboard. Instead: show coverage, capability, and why you’re credible."
             />
 
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="mt-10 grid grid-cols-1 gap-6 font-inter md:grid-cols-3">
               {pillars.map((p) => (
                 <article
                   key={p.title}
                   className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
                 >
-                  <h3 className="text-lg font-medium text-[var(--text-color)]">
+                  <h3 className="font-display text-lg font-medium text-[var(--text-color)]">
                     {p.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-[var(--muted-text)]">
+                  <p className="mt-3 font-inter text-sm leading-6 text-[var(--muted-text)]">
                     {p.body}
                   </p>
                 </article>
               ))}
             </div>
           </FadeIn>
-          <div className="mt-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 sm:p-8">
+
+          <div className="mt-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 font-inter sm:p-8">
             <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-8">
-                <h3 className="text-xl font-semibold tracking-tight text-[var(--text-color)]">
+                <h3 className="font-display text-xl font-semibold text-[var(--text-color)]">
                   Want a concrete walkthrough for your market?
                 </h3>
-                <p className="mt-2 text-[var(--muted-text)]">
+                <p className="mt-2 font-inter text-[var(--muted-text)]">
                   We’ll show what’s covered, how signals are derived, and how
-                  traceability works end-to-end.
+                  traceability works end to end.
                 </p>
               </div>
               <div className="lg:col-span-4 lg:text-right">
@@ -569,17 +536,17 @@ export default function Home() {
               <FadeIn>
                 <h2
                   id="lsp-heading"
-                  className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                  className="font-display text-2xl font-semibold tracking-wide text-[var(--text-color)] md:text-3xl"
                 >
                   Pharma insights with Life Science Pro
                 </h2>
-                <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
+                <p className="mt-4 max-w-3xl font-inter text-[var(--muted-text)]">
                   Track Nordic moves, launches, withdrawals, returns, supply
-                  gaps, and retail price shifts, plus next-period shortage risk,
+                  gaps, and retail price shifts, plus next period shortage risk,
                   across free pricing chains for human and veterinary products.
                   Sales data is available in Denmark.
                 </p>
-                <p className="mt-6 text-sm text-[var(--muted-text)]">
+                <p className="mt-6 font-inter text-sm text-[var(--muted-text)]">
                   Below is a short story showing how teams go from signals to
                   actions.
                 </p>
@@ -614,7 +581,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 pt-12 sm:px-8">
           <h3
             id="lsp-story-heading"
-            className="text-xl font-semibold tracking-tight text-[var(--text-color)] md:text-2xl"
+            className="font-display text-xl font-semibold tracking-normal text-[var(--text-color)] md:text-2xl"
           >
             Life Science Pro story
           </h3>
@@ -630,15 +597,14 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl">
+              <h2 className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl">
                 Services for life sciences
               </h2>
-              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+              <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
                 From market access to supply risk: pragmatic analytics,
                 dependable engineering, and explainable models.
               </p>
             </div>
-            {/* We don't need the button here anymore, it's inside the component */}
           </div>
 
           <ServicesGridWithModal services={services} />
@@ -655,11 +621,11 @@ export default function Home() {
             <div>
               <h2
                 id="compliance-heading"
-                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
               >
                 Validated for regulated environments
               </h2>
-              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+              <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
                 Audit trails, role based access, lineage, and monitoring,
                 delivered with governance that fits life-science workflows.
               </p>
@@ -670,7 +636,7 @@ export default function Home() {
           </div>
 
           {/* DATA REMAINS IN THE SECTION AS REQUESTED */}
-          <ul className="mt-10 grid grid-cols-1 gap-3 text-sm text-[var(--muted-text)] sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-10 grid grid-cols-1 gap-3 font-inter text-sm text-[var(--muted-text)] sm:grid-cols-2 lg:grid-cols-3">
             {[
               "GxP-aware workflows & e-record audit trails",
               "Role based access, least privilege, and encryption in transit/at rest",
@@ -702,16 +668,15 @@ export default function Home() {
             <div>
               <h2
                 id="cases-heading"
-                className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
               >
                 Selected work
               </h2>
-              <p className="mt-2 max-w-2xl text-[var(--muted-text)]">
+              <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
                 Focused engagements across manufacturers, distributors, and
                 animal health.
               </p>
             </div>
-            {/* The button is now inside CasesGridWithModal */}
           </div>
 
           <CasesGridWithModal cases={cases} />
@@ -730,19 +695,19 @@ export default function Home() {
               <FadeIn>
                 <h2
                   id="about-heading"
-                  className="text-2xl font-semibold tracking-tight text-[var(--text-color)] md:text-3xl"
+                  className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
                 >
                   About us
                 </h2>
 
-                <p className="mt-4 max-w-3xl text-[var(--muted-text)]">
+                <p className="mt-4 max-w-3xl font-inter text-[var(--muted-text)]">
                   CPH Analytics is an independent analytics consultancy. We help
                   lifescience teams move from raw data to confident decisions,
                   combining pragmatic strategy with dependable engineering and
                   applied AI.
                 </p>
 
-                <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-[var(--muted-text)] sm:grid-cols-2">
+                <ul className="mt-6 grid grid-cols-1 gap-3 font-inter text-sm text-[var(--muted-text)] sm:grid-cols-2">
                   {[
                     "Evidenc based, measurable outcomes",
                     "Clear roadmaps and fast iterations",
@@ -758,7 +723,7 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <div className="mt-6">
+                <div className="mt-6 font-inter">
                   <BookDemoModalTrigger
                     label="Talk to a life science data lead"
                     bookingUrl={DEMO_BOOKING_URL}
@@ -782,8 +747,8 @@ export default function Home() {
                       priority
                     />
                   </div>
-                  <figcaption className="px-5 py-4">
-                    <div className="text-sm font-medium text-[var(--text-color)]">
+                  <figcaption className="px-5 py-4 font-inter">
+                    <div className="font-display text-sm font-medium text-[var(--text-color)]">
                       David A. Seiler-Holm
                     </div>
                     <div className="text-sm text-[var(--muted-text)]">
@@ -806,17 +771,17 @@ export default function Home() {
           <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-8 text-center sm:p-10">
             <h2
               id="contact-heading"
-              className="text-xl font-semibold tracking-tight text-[var(--text-color)] md:text-2xl"
+              className="font-display text-xl font-semibold tracking-normal text-[var(--text-color)] md:text-2xl"
             >
               Ready to turn signals into outcomes?
             </h2>
 
-            <p className="mt-3 text-[var(--muted-text)]">
+            <p className="mt-3 font-inter text-[var(--muted-text)]">
               Speak with a senior consultant about your roadmap, pricing,
               tenders, shortages, and sell-out analytics for life science teams.
             </p>
 
-            <div className="mt-6 flex items-center justify-center gap-4">
+            <div className="mt-6 flex flex-col items-center justify-center gap-4 font-inter lg:flex-row">
               <BookDemoModalTrigger
                 label="Book a demo"
                 bookingUrl={DEMO_BOOKING_URL}
@@ -831,7 +796,7 @@ export default function Home() {
               />
             </div>
 
-            <p className="mt-4 text-sm text-[var(--muted-text)]">
+            <p className="mt-4 font-inter text-sm text-[var(--muted-text)]">
               Already a client?{" "}
               <a
                 href="https://lsp.cphanalytics.com"
