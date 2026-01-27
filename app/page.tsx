@@ -123,7 +123,7 @@ const scenes = [
     id: "models",
     kicker: "Scenarios",
     title: "Price scenarios that ingest shortage risk",
-    body: "Feed shortage probability and recent deltas into scenario models. For Denmark’s sealed-bid A-price, compare options by win probability, expected turnover, and margin, biasing the recommendation when shortage risk is elevated.",
+    body: "Feed shortage probability and recent deltas into scenario models. For Denmark’s sealed bid A-price, compare options by win probability, expected turnover, and margin, biasing the recommendation when shortage risk is elevated.",
     media: {
       src: "/images/four.avif",
       alt: "Scenario comparison with win probability and turnover curves for A price bids",
@@ -286,7 +286,7 @@ const cases = [
     },
   },
   {
-    title: "Shortage early-warning for distributor)",
+    title: "Shortage early warning for distributor)",
     summary:
       "Signals for shortages and returns across regions and vendors with SKU level explainability.",
     details:
@@ -627,7 +627,7 @@ export default function Home() {
               </h2>
               <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
                 Audit trails, role based access, lineage, and monitoring,
-                delivered with governance that fits life-science workflows.
+                delivered with governance that fits life science workflows.
               </p>
             </div>
 
@@ -638,7 +638,7 @@ export default function Home() {
           {/* DATA REMAINS IN THE SECTION AS REQUESTED */}
           <ul className="mt-10 grid grid-cols-1 gap-3 font-inter text-sm text-[var(--muted-text)] sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "GxP-aware workflows & e-record audit trails",
+              "GxP aware workflows & e-record audit trails",
               "Role based access, least privilege, and encryption in transit/at rest",
               "Data lineage from source to decision surface",
               "Model explainability, drift alerts, and performance monitoring",
@@ -778,7 +778,7 @@ export default function Home() {
 
             <p className="mt-3 font-inter text-[var(--muted-text)]">
               Speak with a senior consultant about your roadmap, pricing,
-              tenders, shortages, and sell-out analytics for life science teams.
+              tenders, shortages, and sell out analytics for life science teams.
             </p>
 
             <div className="mt-6 flex flex-col items-center justify-center gap-4 font-inter lg:flex-row">
