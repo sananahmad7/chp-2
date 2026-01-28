@@ -1,7 +1,7 @@
 // app/layout.tsx
 import "./globals.css";
 import cx from "classnames";
-import { sfPro, inter } from "./fonts";
+import { sfPro, inter, outfit } from "./fonts";
 import Footer from "@/components/layout/footer";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
@@ -46,6 +46,7 @@ export default function RootLayout({
         className={cx(
           sfPro.variable,
           inter.variable,
+          outfit.variable,
           "bg-[var(--page-bg)] text-[var(--text-color)]",
         )}
         style={

@@ -349,7 +349,7 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-6">
       <div>
-        <h2 className="font-display text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
+        <h2 className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
           {title}
         </h2>
         {subtitle ? (
@@ -412,7 +412,7 @@ export default function Home() {
               <div className="relative mt-5 flex h-full w-full min-w-0 max-w-full flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm  sm:p-7 lg:mt-0">
                 <h1
                   id="hero-heading"
-                  className="mt-3 font-display text-4xl font-bold leading-tight tracking-wide text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
+                  className="mt-3 font-outfit text-4xl font-bold leading-tight text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
                 >
                   Price &amp; tender overview for Nordic pharma
                 </h1>
@@ -491,7 +491,7 @@ export default function Home() {
                   key={p.title}
                   className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
                 >
-                  <h3 className="font-display text-lg font-medium text-[var(--text-color)]">
+                  <h3 className="font-outfit text-lg font-medium text-[var(--text-color)]">
                     {p.title}
                   </h3>
                   <p className="mt-3 font-inter text-sm leading-6 text-[var(--muted-text)]">
@@ -505,7 +505,7 @@ export default function Home() {
           <div className="mt-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 font-inter sm:p-8">
             <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-8">
-                <h3 className="font-display text-xl font-semibold text-[var(--text-color)]">
+                <h3 className="font-outfit text-xl font-semibold text-[var(--text-color)]">
                   Want a concrete walkthrough for your market?
                 </h3>
                 <p className="mt-2 font-inter text-[var(--muted-text)]">
@@ -536,7 +536,7 @@ export default function Home() {
               <FadeIn>
                 <h2
                   id="lsp-heading"
-                  className="font-display text-2xl font-semibold tracking-wide text-[var(--text-color)] md:text-3xl"
+                  className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
                 >
                   Pharma insights with Life Science Pro
                 </h2>
@@ -581,7 +581,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 pt-12 sm:px-8">
           <h3
             id="lsp-story-heading"
-            className="font-display text-xl font-semibold tracking-normal text-[var(--text-color)] md:text-2xl"
+            className="font-outfit text-xl font-semibold text-[var(--text-color)] md:text-2xl"
           >
             Life Science Pro story
           </h3>
@@ -597,7 +597,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
-              <h2 className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl">
+              <h2 className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
                 Services for life sciences
               </h2>
               <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
@@ -621,7 +621,7 @@ export default function Home() {
             <div>
               <h2
                 id="compliance-heading"
-                className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
+                className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
               >
                 Validated for regulated environments
               </h2>
@@ -668,7 +668,7 @@ export default function Home() {
             <div>
               <h2
                 id="cases-heading"
-                className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
+                className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
               >
                 Selected work
               </h2>
@@ -695,7 +695,7 @@ export default function Home() {
               <FadeIn>
                 <h2
                   id="about-heading"
-                  className="font-display text-2xl font-semibold tracking-normal text-[var(--text-color)] md:text-3xl"
+                  className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
                 >
                   About us
                 </h2>
@@ -748,7 +748,7 @@ export default function Home() {
                     />
                   </div>
                   <figcaption className="px-5 py-4 font-inter">
-                    <div className="font-display text-sm font-medium text-[var(--text-color)]">
+                    <div className="font-outfit text-sm font-medium text-[var(--text-color)]">
                       David A. Seiler-Holm
                     </div>
                     <div className="text-sm text-[var(--muted-text)]">
@@ -771,7 +771,7 @@ export default function Home() {
           <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-8 text-center sm:p-10">
             <h2
               id="contact-heading"
-              className="font-display text-xl font-semibold tracking-normal text-[var(--text-color)] md:text-2xl"
+              className="font-outfit text-xl font-semibold text-[var(--text-color)] md:text-2xl"
             >
               Ready to turn signals into outcomes?
             </h2>

@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] py-14 text-[var(--header-text-color)]"
+      className="border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] py-14 font-outfit text-[var(--header-text-color)]"
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
