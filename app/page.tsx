@@ -381,9 +381,10 @@ export default function Home() {
       {/* HERO SECTION */}
       <section
         aria-labelledby="hero-heading"
-        className="relative isolate min-h-[68vh] w-full overflow-y-hidden overflow-x-clip sm:min-h-[72vh] lg:min-h-[74vh]"
+        /* Reduced min-h from 68/74vh to 60/65vh */
+        className="relative isolate min-h-[60vh] w-full overflow-y-hidden overflow-x-clip sm:min-h-[62vh] lg:min-h-[65vh]"
       >
-        {/* Put video in an overflow-hidden wrapper so scaling can’t create horizontal scroll */}
+        {/* Video Background */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <HeroVideo
             poster="/video/lsp-hero-poster.webp"
@@ -394,30 +395,30 @@ export default function Home() {
             className="h-full w-full scale-[1.1] object-cover sm:scale-[1.28] lg:scale-[1.34]"
             objectPosition="center 85%"
           />
-
-          {/* Readability scrim */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,51,0.48))]"
           />
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-8 sm:pb-12 sm:pt-20 md:pb-14 md:pt-24">
+        <div className=" lg:px-15 mx-auto w-full px-4  pb-10 pt-16  sm:px-8 sm:pb-12 sm:pt-20 md:pb-14 md:pt-24">
           <div
-            className="grid min-h-[clamp(380px,52vh,600px)] w-full min-w-0 max-w-full items-stretch gap-6 lg:grid-cols-12 lg:gap-8"
+            /* Reduced grid min-height slightly */
+            className="grid min-h-[clamp(350px,45vh,550px)] w-full min-w-0 max-w-full items-stretch gap-6 lg:grid-cols-12 lg:gap-0"
             style={heroGridStyle}
           >
-            {/* Left */}
-            <div className="min-w-0 lg:col-span-7 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
-              <div className="relative mt-5 flex h-full w-full min-w-0 max-w-full flex-col rounded-2xl bg-white/5 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-sm  sm:p-7 lg:mt-0">
+            {/* Left Section: Increased width to col-span-8 to help heading fit on 2 lines */}
+            <div className="min-w-0 lg:col-span-8 lg:min-h-[var(--hero-card-h)] xl:col-span-7">
+              <div className="relative mt-5 flex h-full w-full min-w-0 max-w-full flex-col p-0 lg:mt-0">
                 <h1
                   id="hero-heading"
+                  /* font-outfit heading */
                   className="mt-3 font-outfit text-4xl font-bold leading-tight text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
                 >
                   Price &amp; tender overview for Nordic pharma
                 </h1>
 
-                <p className="mt-4 max-w-prose font-inter text-base leading-7 text-white/80 sm:mt-5 sm:text-lg">
+                <p className="mt-4 max-w-prose font-inter text-base leading-7 text-white/80 sm:mt-7 sm:text-lg">
                   Clear signals for pricing, tenders, and supply risk, delivered
                   with traceability and explainability that regulated teams can
                   trust.
@@ -434,7 +435,7 @@ export default function Home() {
                   <li>• Shortage signals with explainable drivers</li>
                 </ul>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3 font-inter sm:mt-7 sm:gap-4">
+                <div className="mt-6 flex flex-wrap items-center gap-3 font-inter sm:mt-9 sm:gap-4">
                   <BookConsultationModalTrigger
                     label="Book a demo"
                     title="Schedule a walkthrough"
@@ -449,7 +450,7 @@ export default function Home() {
                   </a>
                 </div>
 
-                <div className="mt-auto pt-5 font-inter sm:pt-6">
+                <div className="mt-4 font-inter sm:mt-9">
                   <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/75">
                     <li>Nordic coverage</li>
                     <li className="hidden sm:inline">•</li>
@@ -461,8 +462,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right */}
-            <div className="relative mt-6 min-w-0 overflow-hidden lg:col-span-5 lg:mt-0 lg:min-h-[var(--hero-card-h)] xl:col-span-6">
+            {/* Right Section: Reduced width to col-span-4 and pushed to the end */}
+            <div className="relative mt-6 min-w-0 overflow-hidden lg:col-span-4 lg:col-start-9 lg:mt-0 lg:min-h-[var(--hero-card-h)]">
               <HeroRightMap
                 initialCountry="DK"
                 className="h-full w-full max-w-full"
@@ -472,52 +473,83 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pillars */}
+      {/* Pillars Section */}
       <section
         id="pillars"
         aria-labelledby="pillars-heading"
-        className="scroll-mt-24 border-t border-[var(--border-color)] "
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-200 bg-white py-24 lg:py-32"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
+        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
           <FadeIn>
-            <SectionHeader
-              title="Built for regulated life science teams"
-              subtitle="A marketing homepage shouldn’t pretend to be a live dashboard. Instead: show coverage, capability, and why you’re credible."
-            />
+            <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
+              <div className="max-w-2xl">
+                <h2 className="font-outfit text-sm font-bold uppercase tracking-widest text-[#025eaa]">
+                  Our Foundation
+                </h2>
+                <h3
+                  id="pillars-heading"
+                  className="mt-3 font-outfit text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+                >
+                  Built for regulated life science teams
+                </h3>
+              </div>
+              <p className="max-w-md font-inter text-lg text-gray-600">
+                A marketing homepage shouldn’t pretend to be a live dashboard.
+                Instead: show coverage, capability, and why you’re credible.
+              </p>
+            </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-6 font-inter md:grid-cols-3">
-              {pillars.map((p) => (
+            {/* High Contrast Feature Grid */}
+            <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+              {pillars.map((p, idx) => (
                 <article
                   key={p.title}
-                  className="rounded-xl border border-[var(--border-color)] bg-[var(--surface)] p-6"
+                  /* Changed to rounded-md and increased border/shadow contrast */
+                  className="group relative flex flex-col rounded-md border border-gray-200 bg-white p-8 shadow-sm transition-all hover:border-[#025eaa] hover:shadow-md"
                 >
-                  <h3 className="font-outfit text-lg font-medium text-[var(--text-color)]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 font-inter text-sm leading-6 text-[var(--muted-text)]">
-                    {p.body}
-                  </p>
+                  {/* Numbering - Light Blue Watermark */}
+                  <div className="absolute right-6 top-6">
+                    <span className="font-outfit text-5xl font-bold text-[#025eaa] opacity-10">
+                      0{idx + 1}
+                    </span>
+                  </div>
+
+                  <div className="relative mt-2">
+                    <h3 className="font-outfit text-xl font-bold text-gray-900">
+                      {p.title}
+                    </h3>
+                    <div className="mt-4 h-1 w-12 bg-[#025eaa] transition-all group-hover:w-20" />
+                    <p className="mt-6 font-inter text-sm leading-relaxed text-gray-600">
+                      {p.body}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>
           </FadeIn>
 
-          <div className="mt-10 rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-6 font-inter sm:p-8">
-            <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-8">
-                <h3 className="font-outfit text-xl font-semibold text-[var(--text-color)]">
-                  Want a concrete walkthrough for your market?
+          {/* CTA Walkthrough - High Contrast */}
+          <div className="mt-20 rounded-md border border-gray-200 bg-gray-50 p-8 sm:p-12">
+            <div className="relative z-10 grid gap-10 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#025eaa]">
+                  Live Demo Available
+                </div>
+                <h3 className="mt-6 font-outfit text-3xl font-bold text-gray-900 sm:text-4xl">
+                  Want a concrete walkthrough <br className="hidden md:block" />{" "}
+                  for your market?
                 </h3>
-                <p className="mt-2 font-inter text-[var(--muted-text)]">
+                <p className="mt-4 max-w-xl font-inter text-lg text-gray-600">
                   We’ll show what’s covered, how signals are derived, and how
                   traceability works end to end.
                 </p>
               </div>
-              <div className="lg:col-span-4 lg:text-right">
+
+              <div className="flex justify-start lg:col-span-5 lg:justify-end">
                 <BookConsultationModalTrigger
                   label="Request a walkthrough"
                   title="Request a walkthrough"
-                  className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                  className="inline-flex items-center justify-center rounded-md bg-[#025eaa] px-8 py-4 font-bold text-white shadow-lg shadow-blue-900/10 transition-all hover:bg-[#014a87] active:scale-95"
                 />
               </div>
             </div>
@@ -525,48 +557,106 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LSP intro */}
+      {/* Pharma Insights / LSP Intro */}
       <section
+        id="lsp-story"
         aria-labelledby="lsp-heading"
-        className="border-t border-[var(--border-color)]"
+        className="lg:py-25 relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-10 "
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <div className="grid items-start gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+        {/* Minimalist Background Accents */}
+        <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] translate-x-1/4 opacity-10 [background:radial-gradient(circle_at_center,rgba(2,94,170,0.4)_0,transparent_70%)]" />
+
+        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+          <div className="grid items-center gap-16 lg:grid-cols-12">
+            {/* Left: Content Side */}
+            <div className="lg:col-span-7 xl:col-span-7">
               <FadeIn>
+                <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#025eaa]">
+                  Platform Overview
+                </div>
+
                 <h2
                   id="lsp-heading"
-                  className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
+                  className="mt-6 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl md:leading-[1.1] lg:text-6xl"
                 >
-                  Pharma insights with Life Science Pro
+                  Pharma insights with <br />
+                  <span className="text-[#025eaa]">Life Science Pro</span>
                 </h2>
-                <p className="mt-4 max-w-3xl font-inter text-[var(--muted-text)]">
-                  Track Nordic moves, launches, withdrawals, returns, supply
-                  gaps, and retail price shifts, plus next period shortage risk,
-                  across free pricing chains for human and veterinary products.
-                  Sales data is available in Denmark.
-                </p>
-                <p className="mt-6 font-inter text-sm text-[var(--muted-text)]">
-                  Below is a short story showing how teams go from signals to
-                  actions.
-                </p>
+
+                <div className="mt-8 space-y-6">
+                  <p className="max-w-3xl font-inter text-lg leading-relaxed text-gray-600">
+                    Track Nordic moves, launches, withdrawals, returns, supply
+                    gaps, and retail price shifts, plus next period shortage
+                    risk, across free pricing chains for human and veterinary
+                    products. Sales data is available in Denmark.
+                  </p>
+
+                  {/* Quote/Highlight Box */}
+                  <div className="flex max-w-2xl items-start gap-4 rounded-md border-l-4 border-[#025eaa] bg-gray-50 p-6 shadow-sm">
+                    <p className="font-inter text-sm leading-7 text-gray-600">
+                      <strong className="text-[11px] uppercase tracking-wide text-gray-900">
+                        The Platform Story:
+                      </strong>
+                      <br />
+                      Below is a short walkthrough showing how teams go from raw
+                      signals to strategic market actions.
+                    </p>
+                  </div>
+                </div>
               </FadeIn>
             </div>
 
-            <div className="lg:col-span-5">
-              <figure className="relative overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--surface)]">
-                <FadeInRight>
-                  <div className="relative aspect-[16/10] w-full">
-                    <Image
-                      src="/images/one.jpg"
-                      alt="Illustrative Life Science Pro overview with ATC and pack context"
-                      fill
-                      sizes="(min-width: 1024px) 40vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>{" "}
-                </FadeInRight>
-              </figure>
+            {/* Right: Modern Geometric Image Frame (Restored Aspect Ratio) */}
+            <div className="relative lg:col-span-5 xl:col-span-5">
+              <FadeInRight>
+                <div className="relative">
+                  {/* Main Image Frame */}
+                  <div className="relative overflow-hidden rounded-md border border-gray-200 bg-white p-2 shadow-2xl">
+                    {/* Changed aspect-ratio back to 16/10 to reduce height */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm bg-gray-100">
+                      <Image
+                        src="/images/nine.jpg"
+                        alt="Life Science Pro Interface"
+                        fill
+                        className="object-cover transition-transform duration-1000 hover:scale-110"
+                        sizes="(min-width: 1024px) 30vw, 100vw"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Floating Context Card */}
+                  <div className="absolute -bottom-6 -left-8 hidden rounded-md bg-[#025eaa] p-5 text-white shadow-xl sm:block lg:-left-12">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-white/10">
+                        <svg
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                          />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest opacity-70">
+                          Coverage
+                        </p>
+                        <p className="font-outfit text-base font-bold">
+                          Nordic Markets
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Decorative Outline */}
+                  <div className="absolute -right-4 -top-4 -z-10 h-full w-full rounded-md border border-gray-100" />
+                </div>
+              </FadeInRight>
             </div>
           </div>
         </div>
@@ -576,16 +666,9 @@ export default function Home() {
       <section
         id="lsp-story"
         aria-labelledby="lsp-story-heading"
-        className="scroll-mt-24 border-t border-[var(--border-color)]"
+        className="lg:py-25 relative scroll-mt-24 border-t border-[var(--border-color)] py-10"
       >
-        <div className="mx-auto max-w-7xl px-6 pt-12 sm:px-8">
-          <h3
-            id="lsp-story-heading"
-            className="font-outfit text-xl font-semibold text-[var(--text-color)] md:text-2xl"
-          >
-            Life Science Pro story
-          </h3>
-        </div>
+        {/* The heading is now handled inside StickyStory for better sticky behavior */}
         <StickyStory scenes={scenes} />
       </section>
 
@@ -594,7 +677,7 @@ export default function Home() {
         id="services"
         className="scroll-mt-24 border-t border-[var(--border-color)]"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
+        <div className="container mx-auto px-4 py-16 sm:px-8 lg:px-16">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
               <h2 className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
@@ -616,7 +699,7 @@ export default function Home() {
         aria-labelledby="compliance-heading"
         className="border-t border-[var(--border-color)]"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
+        <div className="container mx-auto px-6 py-16 sm:px-8 lg:px-16">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2
@@ -663,7 +746,7 @@ export default function Home() {
         aria-labelledby="cases-heading"
         className="border-t border-[var(--border-color)]"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
+        <div className="container mx-auto px-6 py-16 sm:px-8 lg:px-16">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
               <h2

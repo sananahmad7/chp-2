@@ -50,7 +50,7 @@ export default function NavBar() {
           : "h-20 border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto h-full max-w-7xl px-4 lg:px-6 2xl:px-8">
+      <div className="container mx-auto h-full px-4 lg:px-6 2xl:px-8">
         <div className="flex h-full items-center justify-between">
           {/* LOGO */}
           <div className="flex-shrink-0">

@@ -47,7 +47,7 @@ export default function RootLayout({
           sfPro.variable,
           inter.variable,
           outfit.variable,
-          "bg-[var(--page-bg)] text-[var(--text-color)]",
+          "overflow-x-hidden bg-[var(--page-bg)] text-[var(--text-color)]",
         )}
         style={
           {

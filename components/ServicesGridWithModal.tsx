@@ -48,82 +48,98 @@ export default function ServicesGridWithModal({
 
   return (
     <div className="relative font-inter">
-      {/* 1. Header Trigger (Internalized) */}
+      {/* 1. Header Trigger - Minimalist Text Link */}
       <div className="absolute -top-16 right-0 sm:-top-20">
         <button
           onClick={() => setAllOpen(true)}
-          className="decoration-[var(--accent-color)]/30 hidden text-sm font-semibold text-[var(--accent-color)] underline underline-offset-8 transition-all hover:decoration-[var(--accent-color)] sm:inline-block"
+          className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-all hover:opacity-70 sm:inline-block"
         >
-          Explore all services →
+          View Full Catalog [0{services.length}]
         </button>
       </div>
 
-      {/* 2. Main Grid - Shows only first 4 */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {/* 2. Main Grid - Asymmetric "L-Frame" Design */}
+      <div className="grid grid-cols-1 gap-px border-y border-slate-100 bg-slate-100 md:grid-cols-2 lg:grid-cols-4">
         {services.slice(0, 4).map((s) => (
           <article
             key={s.title}
-            className="group flex flex-col rounded-2xl border border-blue-100 bg-white p-7 shadow-sm transition-all hover:border-blue-200 hover:shadow-md"
+            className="group relative flex flex-col bg-white p-8 transition-all hover:z-10 hover:shadow-2xl hover:shadow-blue-900/10"
           >
-            <h3 className="font-display text-xl font-bold tracking-wide text-slate-900 group-hover:text-[var(--accent-color)]">
+            {/* Interactive Brand Anchor Line */}
+            <div className="absolute left-0 top-8 h-8 w-1 bg-[#025eaa] transition-all duration-500 group-hover:h-12" />
+
+            <h3 className="font-outfit text-xl font-bold leading-tight text-slate-900">
               {s.title}
             </h3>
-            <p className="mt-3 text-sm leading-6 text-slate-600">{s.body}</p>
-            <div className="mt-auto pt-6">
+
+            <p className="mt-6 text-sm leading-relaxed text-slate-500">
+              {s.body}
+            </p>
+
+            <div className="mt-auto pt-10">
               <button
                 onClick={() => openModal(s)}
-                className="text-sm font-semibold text-[var(--accent-color)] underline underline-offset-8 transition-all hover:decoration-[var(--accent-color)]"
+                className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#025eaa]"
               >
-                Learn more →
+                <span>Discover Details</span>
+                <svg
+                  className="h-3 w-3 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </button>
             </div>
           </article>
         ))}
       </div>
 
-      {/* 3. EXPLORE ALL SERVICES MODAL */}
+      {/* 3. EXPLORE ALL SERVICES MODAL - Dashboard Style */}
       {allOpen && (
         <div
           className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6"
           role="dialog"
         >
           <div
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
             onClick={closeModal}
           />
-          <div className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-100 p-6 sm:px-8">
-              <h2 className="font-display text-2xl font-bold tracking-wide text-slate-900">
+          <div className="relative w-full max-w-5xl overflow-hidden rounded-md border border-slate-200 bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-100 p-8">
+              <h2 className="font-outfit text-3xl font-bold text-slate-900">
                 All Solutions
               </h2>
               <button
                 onClick={closeModal}
-                className="text-slate-400 hover:text-slate-600"
+                className="rounded-full p-2 text-slate-400 transition-colors hover:text-slate-900"
               >
                 <svg
                   width="24"
                   height="24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.5"
                 >
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             </div>
-            <div className="max-h-[70vh] overflow-y-auto p-6 sm:p-8">
-              <div className="grid gap-6 md:grid-cols-2">
+            <div className="max-h-[70vh] overflow-y-auto bg-slate-50/50 p-8">
+              <div className="grid gap-px bg-slate-200 md:grid-cols-2 lg:grid-cols-3">
                 {services.map((s) => (
                   <button
                     key={s.title}
                     onClick={() => openModal(s)}
-                    className="hover:border-[var(--accent-color)]/40 flex flex-col items-start rounded-xl border border-slate-100 p-5 text-left transition-all hover:bg-slate-50"
+                    className="flex flex-col items-start bg-white p-8 text-left transition-all hover:bg-slate-50"
                   >
-                    <span className="font-display font-bold tracking-wide text-slate-900">
+                    <span className="font-outfit font-bold text-slate-900">
                       {s.title}
                     </span>
-                    <span className="mt-1 line-clamp-2 text-sm text-slate-500">
+                    <span className="mt-3 line-clamp-2 text-xs leading-relaxed text-slate-500">
                       {s.body}
                     </span>
                   </button>
@@ -134,80 +150,79 @@ export default function ServicesGridWithModal({
         </div>
       )}
 
-      {/* 4. INDIVIDUAL SERVICE DETAIL MODAL */}
+      {/* 4. INDIVIDUAL SERVICE DETAIL MODAL - Refined High-Contrast */}
       {open && active && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6"
           role="dialog"
         >
           <div
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-lg"
             onClick={closeModal}
           />
-          <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
-            <div className="flex items-start justify-between border-b border-slate-100 p-6 sm:p-8">
+          <div className="relative w-full max-w-2xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl">
+            <div className="flex items-start justify-between p-10">
               <div>
-                <span className="font-display text-[10px] font-bold uppercase tracking-wide text-[var(--accent-color)]">
-                  Service Detail
+                <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.3em] text-[#025eaa]">
+                  Detailed Capability
                 </span>
-                <h2 className="mt-2 font-display text-2xl font-bold tracking-wide text-slate-900 sm:text-3xl">
+                <h2 className="mt-4 font-outfit text-3xl font-bold text-slate-900 sm:text-4xl">
                   {active.title}
                 </h2>
               </div>
               <button
-                ref={closeBtnRef}
                 onClick={closeModal}
-                className="text-slate-400 hover:text-slate-600"
+                className="text-slate-400 transition-colors hover:text-slate-900"
               >
                 <svg
-                  width="20"
-                  height="20"
+                  width="24"
+                  height="24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2.5"
+                  strokeWidth="3"
                 >
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
             </div>
-            <div className="max-h-[70vh] overflow-y-auto p-6 sm:p-8">
-              <div className="space-y-8">
-                <p className="text-lg leading-relaxed text-slate-700">
+            <div className="max-h-[60vh] overflow-y-auto px-10 pb-10">
+              <div className="space-y-12">
+                <p className="font-inter text-xl leading-relaxed text-slate-700">
                   {active.details}
                 </p>
-                <div className="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200">
-                  <h4 className="font-display text-xs font-bold uppercase tracking-wide text-slate-500">
-                    Key Capabilities
+                <div className="rounded-md border border-slate-200 bg-gray-50 p-8">
+                  <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-slate-400">
+                    Core Expertise
                   </h4>
-                  <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <ul className="mt-8 grid gap-4 sm:grid-cols-2">
                     {active.bullets.map((b) => (
                       <li
                         key={b}
-                        className="flex items-start gap-2 text-sm text-slate-600"
+                        className="flex items-start gap-3 text-sm font-medium text-slate-600"
                       >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-color)]" />
+                        <span className="mt-2 h-1 w-4 shrink-0 rounded-full bg-[#025eaa]" />
                         {b}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-              <div className="mt-10 flex justify-end border-t border-slate-100 pt-8">
+              <div className="mt-12 flex items-center justify-between border-t border-slate-100 pt-10">
                 <button
                   onClick={() => {
                     setOpen(false);
                     setAllOpen(true);
                   }}
-                  className="mr-auto text-sm font-semibold text-[var(--accent-color)]"
+                  className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-opacity hover:opacity-70"
                 >
-                  View all services
+                  Back to Catalog
                 </button>
                 <button
                   onClick={closeModal}
-                  className="rounded-full border border-slate-200 px-6 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+                  className="rounded-md bg-slate-900 px-10 py-4 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-black"
                 >
-                  Close
+                  Close Case
                 </button>
               </div>
             </div>
