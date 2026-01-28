@@ -16,7 +16,7 @@ export default function Footer() {
       role="contentinfo"
       className="border-t border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] py-14 font-outfit text-[var(--header-text-color)]"
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+      <div className="container mx-auto px-4 sm:px-8 lg:px-16">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           {/* 1. Left Section: Brand & Bio */}
           <div className="max-w-md lg:flex-1">

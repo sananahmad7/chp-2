@@ -680,7 +680,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16 sm:px-8 lg:px-16">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
-              <h2 className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl">
+              <h2 className="md:text-4x font-outfit text-3xl font-bold tracking-tight text-gray-900">
                 Services for life sciences
               </h2>
               <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
@@ -704,7 +704,7 @@ export default function Home() {
             <div>
               <h2
                 id="compliance-heading"
-                className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
+                className="md:text-4x font-outfit text-3xl font-bold tracking-tight text-gray-900"
               >
                 Validated for regulated environments
               </h2>
@@ -751,7 +751,7 @@ export default function Home() {
             <div>
               <h2
                 id="cases-heading"
-                className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
+                className="font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
               >
                 Selected work
               </h2>
