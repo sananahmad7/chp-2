@@ -770,74 +770,92 @@ export default function Home() {
       <section
         id="about"
         aria-labelledby="about-heading"
-        className="scroll-mt-24 border-t border-[var(--border-color)]"
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-24 lg:py-32"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-12">
+        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+          <div className="grid items-center gap-16 lg:grid-cols-12">
+            {/* Left: Content Side */}
             <div className="lg:col-span-7">
               <FadeIn>
+                <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#025eaa]">
+                  Our Identity
+                </div>
+
                 <h2
                   id="about-heading"
-                  className="font-outfit text-2xl font-semibold text-[var(--text-color)] md:text-3xl"
+                  className="mt-6 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl"
                 >
                   About us
                 </h2>
 
-                <p className="mt-4 max-w-3xl font-inter text-[var(--muted-text)]">
+                <p className="mt-6 max-w-3xl font-inter text-lg leading-relaxed text-gray-600">
                   CPH Analytics is an independent analytics consultancy. We help
                   lifescience teams move from raw data to confident decisions,
                   combining pragmatic strategy with dependable engineering and
                   applied AI.
                 </p>
 
-                <ul className="mt-6 grid grid-cols-1 gap-3 font-inter text-sm text-[var(--muted-text)] sm:grid-cols-2">
+                {/* Feature Grid with Hover Lift */}
+                <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {[
-                    "Evidenc based, measurable outcomes",
+                    "Evidence-based, measurable outcomes",
                     "Clear roadmaps and fast iterations",
                     "Robust data pipelines & decision surfaces",
                     "Explainable models with monitoring",
                   ].map((t) => (
                     <li
                       key={t}
-                      className="rounded-lg border border-[var(--border-color)] bg-[var(--surface)] p-4"
+                      className="group relative flex items-start gap-3 rounded-md border border-gray-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-[#025eaa] hover:shadow-md"
                     >
-                      • {t}
+                      {/* Visual Anchor */}
+                      <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#025eaa] transition-all group-hover:scale-125" />
+                      <span className="font-inter text-sm font-medium text-gray-700">
+                        {t}
+                      </span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-6 font-inter">
+                <div className="mt-10">
                   <BookDemoModalTrigger
                     label="Talk to a life science data lead"
                     bookingUrl={DEMO_BOOKING_URL}
                     embedCalendly={false}
-                    className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                    className="inline-flex items-center justify-center rounded-md bg-[#025eaa] px-8 py-4 font-outfit font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-[#014a87] active:scale-95"
                   />
                 </div>
               </FadeIn>
             </div>
 
+            {/* Right: Refined Portrait Frame */}
             <aside className="lg:col-span-5">
               <FadeInRight>
-                <figure className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--surface)]">
-                  <div className="relative aspect-[4/5] w-full">
-                    <Image
-                      src="/images/people/you.jpg"
-                      alt="Headshot"
-                      fill
-                      sizes="(min-width: 1024px) 320px, 60vw"
-                      className="object-cover"
-                      priority
-                    />
+                <figure className="relative mx-auto w-full max-w-sm">
+                  {/* Background Decorator */}
+                  <div className="absolute -bottom-6 -right-6 h-full w-full rounded-md bg-gray-50" />
+
+                  <div className="relative overflow-hidden rounded-md border border-gray-200 bg-white p-2 shadow-2xl">
+                    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm">
+                      <Image
+                        src="/images/people/you.jpg"
+                        alt="David A. Seiler-Holm Headshot"
+                        fill
+                        sizes="(min-width: 1024px) 400px, 80vw"
+                        className="object-cover transition-transform duration-1000 hover:scale-105"
+                        priority
+                      />
+                    </div>
+
+                    <figcaption className="px-4 py-5 font-inter">
+                      <div className="font-outfit text-base font-bold text-gray-900">
+                        David A. Seiler-Holm
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#025eaa]">
+                        <span className="h-px w-4 bg-[#025eaa]" />
+                        Managing Partner
+                      </div>
+                    </figcaption>
                   </div>
-                  <figcaption className="px-5 py-4 font-inter">
-                    <div className="font-outfit text-sm font-medium text-[var(--text-color)]">
-                      David A. Seiler-Holm
-                    </div>
-                    <div className="text-sm text-[var(--muted-text)]">
-                      Managing Partner
-                    </div>
-                  </figcaption>
                 </figure>
               </FadeInRight>
             </aside>
@@ -848,48 +866,71 @@ export default function Home() {
       {/* Contact band */}
       <section
         aria-labelledby="contact-heading"
-        className="border-t border-[var(--border-color)]"
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-12 lg:py-16"
       >
-        <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-          <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--surface)] p-8 text-center sm:p-10">
-            <h2
-              id="contact-heading"
-              className="font-outfit text-xl font-semibold text-[var(--text-color)] md:text-2xl"
-            >
-              Ready to turn signals into outcomes?
-            </h2>
+        {/* Subtle technical background accent */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] opacity-40 [background-size:32px_32px]" />
 
-            <p className="mt-3 font-inter text-[var(--muted-text)]">
-              Speak with a senior consultant about your roadmap, pricing,
-              tenders, shortages, and sell out analytics for life science teams.
-            </p>
+        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+          {/* Reduced internal padding from p-20 to p-10 */}
+          <div className="relative overflow-hidden rounded-md border border-slate-200 bg-white p-8 text-center shadow-2xl shadow-blue-900/5 sm:p-12">
+            {/* Decorative Brand Anchor - Top Center */}
+            <div className="absolute left-1/2 top-0 h-1 w-20 -translate-x-1/2 bg-[#025eaa]" />
 
-            <div className="mt-6 flex flex-col items-center justify-center gap-4 font-inter lg:flex-row">
-              <BookDemoModalTrigger
-                label="Book a demo"
-                bookingUrl={DEMO_BOOKING_URL}
-                embedCalendly={false}
-                className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-              />
-
-              <BookConsultationModalTrigger
-                label="Book a Consultation"
-                title="Book a Consultation"
-                className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-5 py-3 font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
-              />
-            </div>
-
-            <p className="mt-4 font-inter text-sm text-[var(--muted-text)]">
-              Already a client?{" "}
-              <a
-                href="https://lsp.cphanalytics.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--accent-color)] underline decoration-[var(--accent-color)] underline-offset-4 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+            <FadeIn>
+              <h2
+                id="contact-heading"
+                className="font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-4xl"
               >
-                Client Login →
-              </a>
-            </p>
+                Ready to turn signals into outcomes?
+              </h2>
+
+              {/* Reduced margin and text size for a tighter look */}
+              <p className="mx-auto mt-4 max-w-xl font-inter text-base text-gray-600">
+                Speak with a senior consultant about your roadmap, pricing, and
+                analytics for life science teams.
+              </p>
+
+              {/* Tightened gap between buttons */}
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 font-outfit sm:flex-row">
+                <BookDemoModalTrigger
+                  label="Book a demo"
+                  bookingUrl={DEMO_BOOKING_URL}
+                  embedCalendly={false}
+                  className="inline-flex w-full items-center justify-center rounded-md bg-[#025eaa] px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-[#014a87] active:scale-95 sm:w-auto"
+                />
+
+                <BookConsultationModalTrigger
+                  label="Request Consultation"
+                  title="Request Consultation"
+                  className="inline-flex w-full items-center justify-center rounded-md border-2 border-slate-200 bg-white px-6 py-3 text-sm font-bold text-gray-900 transition-all hover:-translate-y-1 hover:border-[#025eaa] hover:text-[#025eaa] active:scale-95 sm:w-auto"
+                />
+              </div>
+
+              {/* Reduced margin for footer area */}
+              <div className="mt-8 border-t border-slate-100 pt-6">
+                <p className="font-inter text-xs font-medium text-gray-500">
+                  Already a client?{" "}
+                  <a
+                    href="https://lsp.cphanalytics.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-1 inline-flex items-center font-bold text-[#025eaa] transition-opacity hover:opacity-70"
+                  >
+                    Client Login
+                    <svg
+                      className="ml-1 h-3.5 w-3.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </p>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>

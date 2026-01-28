@@ -164,7 +164,6 @@ export default function CasesGridWithModal({
       </AnimatePresence>
 
       {/* 4. INDIVIDUAL CASE DETAIL MODAL */}
-      {/* 4. INDIVIDUAL CASE DETAIL MODAL - HEIGHT REDUCED */}
       <AnimatePresence>
         {open && active && (
           <div
