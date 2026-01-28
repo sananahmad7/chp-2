@@ -408,11 +408,12 @@ export default function Home() {
             style={heroGridStyle}
           >
             {/* Left Section: Increased width to col-span-8 to help heading fit on 2 lines */}
-            <div className="min-w-0 lg:col-span-8 lg:min-h-[var(--hero-card-h)] xl:col-span-7">
-              <div className="relative mt-5 flex h-full w-full min-w-0 max-w-full flex-col p-0 lg:mt-0">
+
+            <div className="flex min-w-0 flex-col justify-center  py-5 lg:col-span-8 lg:min-h-[var(--hero-card-h)] xl:col-span-7">
+              {/* Inner Content Wrapper */}
+              <div className="relative mt-5 flex w-full min-w-0 max-w-full flex-col p-0 lg:mt-0">
                 <h1
                   id="hero-heading"
-                  /* font-outfit heading */
                   className="mt-3 font-outfit text-4xl font-bold leading-tight text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
                 >
                   Price &amp; tender overview for Nordic pharma
@@ -461,7 +462,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
             {/* Right Section: Reduced width to col-span-4 and pushed to the end */}
             <div className="relative mt-6 min-w-0 overflow-hidden lg:col-span-4 lg:col-start-9 lg:mt-0 lg:min-h-[var(--hero-card-h)]">
               <HeroRightMap
@@ -694,49 +694,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Compliance */}
+      {/* Compliance Section */}
       <section
         aria-labelledby="compliance-heading"
-        className="border-t border-[var(--border-color)]"
+        className="relative scroll-mt-24 border-t border-gray-100 bg-white py-12 lg:py-16"
       >
-        <div className="container mx-auto px-6 py-16 sm:px-8 lg:px-16">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2
-                id="compliance-heading"
-                className="font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
-              >
-                Validated for regulated environments
-              </h2>
-              <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
-                Audit trails, role based access, lineage, and monitoring,
-                delivered with governance that fits life science workflows.
-              </p>
-            </div>
+        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+          {/* Full-Width Header: Above the Image Level */}
+          <div className="mb-12 border-b border-slate-100 pb-10">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <div className="flex items-center gap-3 text-[#025eaa]">
+                  <span className="h-px w-8 bg-current" />
+                  <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.3em]">
+                    Technical Integrity
+                  </span>
+                </div>
 
-            {/* TRIGGER COMPONENT */}
-            <ComplianceModal />
+                <h2
+                  id="compliance-heading"
+                  className="mt-4 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl"
+                >
+                  Validated for regulated environments
+                </h2>
+
+                <p className="mt-4 font-inter text-lg leading-relaxed text-gray-600">
+                  Audit trails, role-based access, and lineage delivered with
+                  governance that fits life science workflows.
+                </p>
+              </div>
+
+              <div className="pb-1">
+                <ComplianceModal />
+              </div>
+            </div>
           </div>
 
-          {/* DATA REMAINS IN THE SECTION AS REQUESTED */}
-          <ul className="mt-10 grid grid-cols-1 gap-3 font-inter text-sm text-[var(--muted-text)] sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              "GxP aware workflows & e-record audit trails",
-              "Role based access, least privilege, and encryption in transit/at rest",
-              "Data lineage from source to decision surface",
-              "Model explainability, drift alerts, and performance monitoring",
-              "Change control with environment based deployments",
-              "Validation documentation available on request",
-            ].map((item) => (
-              <li
-                key={item}
-                className="rounded-lg border border-[var(--border-color)] bg-white p-4 shadow-sm"
-              >
-                <span className="mr-2 text-[var(--accent-color)]">•</span>
-                {item}
-              </li>
-            ))}
-          </ul>
+          {/* Split Content: Points and Image */}
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
+            {/* Left Column: Technical Data Points */}
+            <div className="flex flex-col">
+              <ul className="space-y-4">
+                {[
+                  "GxP aware workflows & e-record audit trails",
+                  "Role based access, least privilege, and encryption",
+                  "Data lineage from source to decision surface",
+                  "Model explainability & performance monitoring",
+                  "Change control with environment based deployments",
+                  "Validation documentation available on request",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="group flex items-center gap-4 rounded-md border border-gray-100 bg-white p-5 transition-all hover:border-[#025eaa] hover:shadow-sm"
+                  >
+                    {/* Geometric Blue Accent */}
+                    <div className="h-1.5 w-1.5 shrink-0 bg-[#025eaa] transition-transform group-hover:scale-125" />
+                    <span className="font-outfit text-sm font-bold text-gray-900">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Column: Technical Supporting Image */}
+            <div className="relative">
+              {/* Decorative Frame Decorator */}
+              <div className="absolute -bottom-4 -right-4 h-full w-full rounded-md bg-gray-50" />
+
+              <figure className="relative overflow-hidden rounded-md border border-gray-200 bg-white p-2 shadow-2xl">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
+                  <Image
+                    src="/images/data.webp"
+                    alt="Technical Data Lineage Visualization"
+                    fill
+                    className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                  />
+                </div>
+                <figcaption className="mt-4 flex items-center justify-between px-3 pb-1">
+                  <span className="font-outfit text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                    System: Encrypted // GxP Validated
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-outfit text-[9px] font-bold text-emerald-600">
+                      Active
+                    </span>
+                    <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -893,16 +941,9 @@ export default function Home() {
 
               {/* Tightened gap between buttons */}
               <div className="mt-8 flex flex-col items-center justify-center gap-3 font-outfit sm:flex-row">
-                <BookDemoModalTrigger
-                  label="Book a demo"
-                  bookingUrl={DEMO_BOOKING_URL}
-                  embedCalendly={false}
-                  className="inline-flex w-full items-center justify-center rounded-md bg-[#025eaa] px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-[#014a87] active:scale-95 sm:w-auto"
-                />
-
                 <BookConsultationModalTrigger
-                  label="Request Consultation"
-                  title="Request Consultation"
+                  label="Book a Demo"
+                  title="Book a Demo"
                   className="inline-flex w-full items-center justify-center rounded-md border-2 border-slate-200 bg-white px-6 py-3 text-sm font-bold text-gray-900 transition-all hover:-translate-y-1 hover:border-[#025eaa] hover:text-[#025eaa] active:scale-95 sm:w-auto"
                 />
               </div>
