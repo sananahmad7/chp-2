@@ -56,7 +56,7 @@ export default function StickyStory({ scenes }: Props) {
               </div>
 
               <h3 className="mb-12 font-outfit text-3xl font-bold text-gray-900">
-                Life Science <br /> Pro Story
+                Life Science Pro Story
               </h3>
 
               <div className="relative">
@@ -110,9 +110,9 @@ export default function StickyStory({ scenes }: Props) {
                 ref={(el) => (refs.current[i] = el)}
                 className="scroll-mt-32"
               >
-                <div className="max-w-3xl">
+                <div className="mt-10 max-w-3xl">
                   <motion.h3
-                    className="font-outfit text-3xl font-bold leading-tight text-gray-900 md:text-5xl"
+                    className="font-outfit text-3xl font-bold leading-tight text-gray-900 md:text-4xl"
                     {...fadeUp}
                   >
                     {s.title}

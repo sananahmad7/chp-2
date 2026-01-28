@@ -73,17 +73,17 @@ export default function CasesGridWithModal({
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-slate-900/10 transition-opacity group-hover:opacity-0" />
+              <div className="absolute inset-0 bg-gray-900/10 transition-opacity group-hover:opacity-0" />
             </div>
 
             <div className="relative flex flex-1 flex-col p-7">
               {/* Interactive Anchor */}
               <div className="absolute left-0 top-7 h-6 w-1 bg-[#025eaa] transition-all duration-300 group-hover:h-10" />
 
-              <h3 className="font-outfit text-xl font-bold leading-tight text-slate-900 transition-colors group-hover:text-[#025eaa]">
+              <h3 className="font-outfit text-xl font-bold leading-tight text-gray-900 transition-colors group-hover:text-[#025eaa]">
                 {c.title}
               </h3>
-              <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-slate-500">
+              <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-gray-600">
                 {c.summary}
               </p>
 
@@ -121,12 +121,12 @@ export default function CasesGridWithModal({
               className="relative w-full max-w-5xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
             >
               <div className="flex items-center justify-between border-b border-slate-100 p-8">
-                <h2 className="font-outfit text-3xl font-bold text-slate-900">
+                <h2 className="font-outfit text-3xl font-bold text-gray-900">
                   Case Archive
                 </h2>
                 <button
                   onClick={closeModal}
-                  className="text-slate-400 hover:text-slate-900"
+                  className="text-slate-400 hover:text-gray-900"
                 >
                   <svg
                     width="24"
@@ -148,7 +148,7 @@ export default function CasesGridWithModal({
                       onClick={() => openModal(c)}
                       className="flex flex-col items-start rounded-md border border-slate-200 bg-white p-6 text-left transition-all hover:border-[#025eaa] hover:shadow-lg"
                     >
-                      <span className="font-outfit font-bold text-slate-900">
+                      <span className="font-outfit font-bold text-gray-900">
                         {c.title}
                       </span>
                       <span className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500">
@@ -214,17 +214,17 @@ export default function CasesGridWithModal({
                 <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.3em] text-[#025eaa]">
                   Case Investigation
                 </span>
-                <h2 className="mt-2 font-outfit text-2xl font-bold leading-tight text-slate-900 sm:text-3xl">
+                <h2 className="mt-2 font-outfit text-2xl font-bold leading-tight text-gray-900 sm:text-3xl">
                   {active.title}
                 </h2>
 
                 {/* Reduced gap between sections from mt-10 to mt-6 */}
                 <div className="mt-6 space-y-6">
                   <div>
-                    <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-slate-400">
+                    <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-gray-600">
                       Project Background
                     </h4>
-                    <p className="mt-2 font-inter text-base leading-relaxed text-slate-700">
+                    <p className="mt-2 font-inter text-base leading-relaxed text-gray-600">
                       {active.details}
                     </p>
                   </div>
@@ -234,7 +234,7 @@ export default function CasesGridWithModal({
                     <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-[#025eaa]">
                       Measurable Impact
                     </h4>
-                    <p className="mt-2 font-outfit text-lg font-bold leading-snug text-slate-900">
+                    <p className="mt-2 font-outfit text-lg font-bold leading-snug text-gray-900">
                       {active.impact}
                     </p>
                   </div>

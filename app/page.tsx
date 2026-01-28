@@ -488,7 +488,7 @@ export default function Home() {
                 </h2>
                 <h3
                   id="pillars-heading"
-                  className="mt-3 font-outfit text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+                  className="mt-3 font-outfit text-3xl font-bold tracking-tight text-gray-900 lg:text-4xl"
                 >
                   Built for regulated life science teams
                 </h3>
@@ -518,7 +518,7 @@ export default function Home() {
                     <h3 className="font-outfit text-xl font-bold text-gray-900">
                       {p.title}
                     </h3>
-                    <div className="mt-4 h-1 w-12 bg-[#025eaa] transition-all group-hover:w-20" />
+
                     <p className="mt-6 font-inter text-sm leading-relaxed text-gray-600">
                       {p.body}
                     </p>
@@ -577,7 +577,7 @@ export default function Home() {
 
                 <h2
                   id="lsp-heading"
-                  className="mt-6 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl md:leading-[1.1] lg:text-6xl"
+                  className="mt-6 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl md:leading-[1.1] lg:text-5xl"
                 >
                   Pharma insights with <br />
                   <span className="text-[#025eaa]">Life Science Pro</span>
@@ -680,7 +680,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-16 sm:px-8 lg:px-16">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
-              <h2 className="md:text-4x font-outfit text-3xl font-bold tracking-tight text-gray-900">
+              <h2 className="font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
                 Services for life sciences
               </h2>
               <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
@@ -704,7 +704,7 @@ export default function Home() {
             <div>
               <h2
                 id="compliance-heading"
-                className="md:text-4x font-outfit text-3xl font-bold tracking-tight text-gray-900"
+                className="font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
               >
                 Validated for regulated environments
               </h2>
@@ -755,7 +755,7 @@ export default function Home() {
               >
                 Selected work
               </h2>
-              <p className="mt-2 max-w-2xl font-inter text-[var(--muted-text)]">
+              <p className="mt-2 max-w-2xl font-inter text-sm">
                 Focused engagements across manufacturers, distributors, and
                 animal health.
               </p>
@@ -783,7 +783,7 @@ export default function Home() {
 
                 <h2
                   id="about-heading"
-                  className="mt-6 font-outfit text-4xl font-bold tracking-tight text-gray-900 md:text-5xl"
+                  className="mt-6 font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl"
                 >
                   About us
                 </h2>

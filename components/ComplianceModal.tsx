@@ -59,7 +59,7 @@ export default function ComplianceModal() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-md"
             />
 
             {/* Modal Container: High Contrast Geometric Structure */}
@@ -106,10 +106,10 @@ export default function ComplianceModal() {
                       {/* Technical visual anchor */}
                       <div className="absolute -left-6 top-1 h-4 w-1 bg-slate-100 transition-all group-hover:bg-[#025eaa]" />
 
-                      <h3 className="font-outfit text-sm font-black uppercase tracking-widest text-slate-900 transition-colors group-hover:text-[#025eaa]">
+                      <h3 className="font-outfit text-sm font-black uppercase tracking-widest text-gray-900 transition-colors group-hover:text-[#025eaa]">
                         {item.category}
                       </h3>
-                      <p className="mt-4 font-inter text-base leading-relaxed text-slate-600">
+                      <p className="mt-4 font-inter text-base leading-relaxed text-gray-600">
                         {item.details}
                       </p>
                     </div>
@@ -120,7 +120,7 @@ export default function ComplianceModal() {
               {/* FOOTER: Contrast Reinforcement */}
               <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 px-8 py-8 sm:px-12">
                 <div className="hidden sm:block">
-                  <p className="font-outfit text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  <p className="font-outfit text-[10px] font-bold uppercase tracking-widest text-gray-600">
                     LSP Protocol Specification
                   </p>
                 </div>

@@ -54,7 +54,7 @@ export default function ServicesGridWithModal({
           onClick={() => setAllOpen(true)}
           className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-all hover:opacity-70 sm:inline-block"
         >
-          View Full Catalog [0{services.length}]
+          View All Services →
         </button>
       </div>
 
@@ -68,11 +68,11 @@ export default function ServicesGridWithModal({
             {/* Interactive Brand Anchor Line */}
             <div className="absolute left-0 top-8 h-8 w-1 bg-[#025eaa] transition-all duration-500 group-hover:h-12" />
 
-            <h3 className="font-outfit text-xl font-bold leading-tight text-slate-900">
+            <h3 className="font-outfit text-xl font-bold leading-tight text-gray-900">
               {s.title}
             </h3>
 
-            <p className="mt-6 text-sm leading-relaxed text-slate-500">
+            <p className="mt-6 text-sm leading-relaxed text-gray-600">
               {s.body}
             </p>
 
@@ -114,7 +114,7 @@ export default function ServicesGridWithModal({
               </h2>
               <button
                 onClick={closeModal}
-                className="rounded-full p-2 text-slate-400 transition-colors hover:text-slate-900"
+                className="rounded-full p-2 text-gray-600 transition-colors hover:text-gray-900"
               >
                 <svg
                   width="24"
@@ -136,10 +136,10 @@ export default function ServicesGridWithModal({
                     onClick={() => openModal(s)}
                     className="flex flex-col items-start bg-white p-8 text-left transition-all hover:bg-slate-50"
                   >
-                    <span className="font-outfit font-bold text-slate-900">
+                    <span className="font-outfit font-bold text-gray-900">
                       {s.title}
                     </span>
-                    <span className="mt-3 line-clamp-2 text-xs leading-relaxed text-slate-500">
+                    <span className="mt-3 line-clamp-2 text-xs leading-relaxed text-gray-600">
                       {s.body}
                     </span>
                   </button>
