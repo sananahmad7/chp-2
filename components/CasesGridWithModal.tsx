@@ -49,8 +49,8 @@ export default function CasesGridWithModal({
 
   return (
     <div className="relative font-inter">
-      {/* 1. Header Trigger - Minimalist Text Link */}
-      <div className="absolute -top-16 right-0 sm:-top-20">
+      {/* 1. Header Trigger */}
+      <div className="absolute -top-10 left-0 md:-top-10 lg:-top-20 lg:left-auto lg:right-0">
         <button
           onClick={() => setAllOpen(true)}
           className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-all hover:opacity-70 sm:inline-block"
@@ -59,7 +59,7 @@ export default function CasesGridWithModal({
         </button>
       </div>
 
-      {/* 2. Main Grid - High Contrast "Precision" Cards */}
+      {/* 2. Main Grid */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {cases.slice(0, 3).map((c) => (
           <article
@@ -77,16 +77,13 @@ export default function CasesGridWithModal({
             </div>
 
             <div className="relative flex flex-1 flex-col p-7">
-              {/* Interactive Anchor */}
               <div className="absolute left-0 top-7 h-6 w-1 bg-[#025eaa] transition-all duration-300 group-hover:h-10" />
-
               <h3 className="font-outfit text-xl font-bold leading-tight text-gray-900 transition-colors group-hover:text-[#025eaa]">
                 {c.title}
               </h3>
               <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-gray-600">
                 {c.summary}
               </p>
-
               <div className="mt-auto pt-8">
                 <button
                   onClick={() => openModal(c)}
@@ -111,16 +108,17 @@ export default function CasesGridWithModal({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-md"
+              className="absolute inset-0 bg-black/60"
               onClick={closeModal}
             />
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-5xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
+              /* FIX: Added max-h and flex column */
+              className="relative flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 p-8">
+              <div className="flex flex-none items-center justify-between border-b border-slate-100 p-8">
                 <h2 className="font-outfit text-3xl font-bold text-gray-900">
                   Case Archive
                 </h2>
@@ -140,7 +138,7 @@ export default function CasesGridWithModal({
                   </svg>
                 </button>
               </div>
-              <div className="max-h-[70vh] overflow-y-auto bg-slate-50/50 p-8">
+              <div className="flex-1 overflow-y-auto bg-slate-50/50 p-8">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {cases.map((c) => (
                     <button
@@ -174,17 +172,18 @@ export default function CasesGridWithModal({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-900/70 backdrop-blur-lg"
+              className="absolute inset-0 bg-black/60"
               onClick={closeModal}
             />
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
-              className="relative w-full max-w-2xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
+              /* FIX: Added max-h and flex column */
+              className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
             >
-              {/* Reduced image height from h-56 to h-40 */}
-              <div className="relative h-40 w-full">
+              {/* Header Image: Fixed height */}
+              <div className="relative h-40 w-full flex-none">
                 <Image
                   src={active.image.src}
                   alt={active.image.alt}
@@ -194,7 +193,7 @@ export default function CasesGridWithModal({
                 <div className="absolute inset-0 bg-gradient-to-t from-white via-white/5 to-transparent" />
                 <button
                   onClick={closeModal}
-                  className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-md transition-colors hover:bg-black"
+                  className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black"
                 >
                   <svg
                     width="16"
@@ -209,8 +208,8 @@ export default function CasesGridWithModal({
                 </button>
               </div>
 
-              {/* Reduced vertical padding from p-10 to p-8 */}
-              <div className="p-8 pt-4">
+              {/* Scrollable Content Section */}
+              <div className="flex-1 overflow-y-auto p-8 pt-4">
                 <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.3em] text-[#025eaa]">
                   Case Investigation
                 </span>
@@ -218,7 +217,6 @@ export default function CasesGridWithModal({
                   {active.title}
                 </h2>
 
-                {/* Reduced gap between sections from mt-10 to mt-6 */}
                 <div className="mt-6 space-y-6">
                   <div>
                     <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-gray-600">
@@ -229,7 +227,6 @@ export default function CasesGridWithModal({
                     </p>
                   </div>
 
-                  {/* Tightened the impact box padding */}
                   <div className="rounded-md border border-slate-200 bg-slate-50 p-6">
                     <h4 className="font-outfit text-xs font-bold uppercase tracking-widest text-[#025eaa]">
                       Measurable Impact
@@ -239,25 +236,25 @@ export default function CasesGridWithModal({
                     </p>
                   </div>
                 </div>
+              </div>
 
-                {/* Reduced margin from mt-12 to mt-8 */}
-                <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-6">
-                  <button
-                    onClick={() => {
-                      setOpen(false);
-                      setAllOpen(true);
-                    }}
-                    className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-opacity hover:opacity-70"
-                  >
-                    ← Back to Archive
-                  </button>
-                  <button
-                    onClick={closeModal}
-                    className="rounded-md bg-slate-900 px-8 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-black"
-                  >
-                    Close Study
-                  </button>
-                </div>
+              {/* Footer Actions: Fixed at bottom */}
+              <div className="flex flex-none items-center justify-between border-t border-slate-100 bg-white p-8 pt-6">
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    setAllOpen(true);
+                  }}
+                  className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-opacity hover:opacity-70"
+                >
+                  ← Back to Archive
+                </button>
+                <button
+                  onClick={closeModal}
+                  className="rounded-md bg-slate-900 px-8 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-black"
+                >
+                  Close Study
+                </button>
               </div>
             </motion.div>
           </div>

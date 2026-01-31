@@ -42,7 +42,6 @@ export default function ComplianceModal() {
 
   return (
     <>
-      {/* Trigger: Branded Link */}
       <button
         onClick={() => setOpen(true)}
         className="font-outfit text-xs font-bold uppercase tracking-[0.25em] text-[#025eaa] transition-all hover:opacity-70"
@@ -53,43 +52,43 @@ export default function ComplianceModal() {
       <AnimatePresence>
         {open && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6">
-            {/* Backdrop with stronger blur */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-gray-900/60 backdrop-blur-md"
+              className="absolute inset-0 bg-black/60 transition-opacity"
             />
 
-            {/* Modal Container: High Contrast Geometric Structure */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-2xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
+              /* Updated: Added flex layout and max-height for mobile responsiveness */
+              className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl"
             >
-              {/* BRANDED HEADER: Deep Blue Theme */}
-              <div className="bg-[#025eaa] px-8 py-10 text-white sm:px-12">
+              {/* Header: Fixed (flex-none) */}
+              <div className="flex-none bg-[#025eaa] px-6 py-8 text-white sm:px-12 sm:py-10">
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.4em] opacity-70">
                       Governance & Transparency
                     </span>
-                    <h2 className="font-outfit text-3xl font-bold tracking-tight sm:text-4xl">
+                    <h2 className="font-outfit text-2xl font-bold tracking-tight sm:text-4xl">
                       Compliance <br className="sm:hidden" /> Deep-Dive
                     </h2>
                   </div>
                   <button
                     onClick={closeModal}
-                    className="flex h-12 w-12 items-center justify-center border border-white/20 transition-colors hover:bg-white/10"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center border border-white/20 transition-colors hover:bg-white/10 sm:h-12 sm:w-12"
                   >
                     <svg
-                      width="24"
-                      height="24"
+                      width="20"
+                      height="20"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="3"
+                      className="sm:h-6 sm:w-6"
                     >
                       <line x1="18" y1="6" x2="6" y2="18" />
                       <line x1="6" y1="6" x2="18" y2="18" />
@@ -98,14 +97,12 @@ export default function ComplianceModal() {
                 </div>
               </div>
 
-              {/* CONTENT: Technical Data Sheet Style */}
-              <div className="max-h-[55vh] overflow-y-auto bg-white p-8 sm:p-12">
-                <div className="space-y-12">
+              {/* Content: Scrollable (flex-1) */}
+              <div className="flex-1 overflow-y-auto bg-white p-6 sm:p-12">
+                <div className="space-y-10 sm:space-y-12">
                   {EXTRA_COMPLIANCE_DATA.map((item) => (
                     <div key={item.category} className="group relative">
-                      {/* Technical visual anchor */}
                       <div className="absolute -left-6 top-1 h-4 w-1 bg-slate-100 transition-all group-hover:bg-[#025eaa]" />
-
                       <h3 className="font-outfit text-sm font-black uppercase tracking-widest text-gray-900 transition-colors group-hover:text-[#025eaa]">
                         {item.category}
                       </h3>
@@ -117,8 +114,8 @@ export default function ComplianceModal() {
                 </div>
               </div>
 
-              {/* FOOTER: Contrast Reinforcement */}
-              <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50 px-8 py-8 sm:px-12">
+              {/* Footer: Fixed (flex-none) */}
+              <div className="flex flex-none items-center justify-between border-t border-slate-100 bg-slate-50 px-6 py-6 sm:px-12 sm:py-8">
                 <div className="hidden sm:block">
                   <p className="font-outfit text-[10px] font-bold uppercase tracking-widest text-gray-600">
                     LSP Protocol Specification

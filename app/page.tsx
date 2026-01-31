@@ -472,14 +472,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Pillars Section */}
       <section
         id="pillars"
         aria-labelledby="pillars-heading"
-        className="relative scroll-mt-24 overflow-hidden border-t border-gray-200 bg-white py-24 lg:py-32"
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-200 bg-white py-24"
       >
-        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           <FadeIn>
             <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
               <div className="max-w-2xl">
@@ -566,7 +565,7 @@ export default function Home() {
         {/* Minimalist Background Accents */}
         <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] translate-x-1/4 opacity-10 [background:radial-gradient(circle_at_center,rgba(2,94,170,0.4)_0,transparent_70%)]" />
 
-        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           <div className="grid items-center gap-16 lg:grid-cols-12">
             {/* Left: Content Side */}
             <div className="lg:col-span-7 xl:col-span-7">
@@ -666,7 +665,7 @@ export default function Home() {
       <section
         id="lsp-story"
         aria-labelledby="lsp-story-heading"
-        className="lg:py-25 relative scroll-mt-24 border-t border-[var(--border-color)] py-10"
+        className="lg:py-25 relative mx-auto max-w-7xl scroll-mt-24 border-t border-[var(--border-color)] px-4 py-10 md:px-0"
       >
         {/* The heading is now handled inside StickyStory for better sticky behavior */}
         <StickyStory scenes={scenes} />
@@ -677,7 +676,7 @@ export default function Home() {
         id="services"
         className="scroll-mt-24 border-t border-[var(--border-color)]"
       >
-        <div className="container mx-auto px-4 py-16 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-16 xl:px-0">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
               <h2 className="font-outfit text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
@@ -699,7 +698,7 @@ export default function Home() {
         aria-labelledby="compliance-heading"
         className="relative scroll-mt-24 border-t border-gray-100 bg-white py-12 lg:py-16"
       >
-        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           {/* Full-Width Header: Above the Image Level */}
           <div className="mb-12 border-b border-slate-100 pb-10">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -794,7 +793,7 @@ export default function Home() {
         aria-labelledby="cases-heading"
         className="border-t border-[var(--border-color)]"
       >
-        <div className="container mx-auto px-6 py-16 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-16 xl:px-0">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
               <h2
@@ -818,9 +817,9 @@ export default function Home() {
       <section
         id="about"
         aria-labelledby="about-heading"
-        className="relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-24 lg:py-32"
+        className="lg:py-25 relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-16"
       >
-        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           <div className="grid items-center gap-16 lg:grid-cols-12">
             {/* Left: Content Side */}
             <div className="lg:col-span-7">
@@ -865,11 +864,10 @@ export default function Home() {
                 </ul>
 
                 <div className="mt-10">
-                  <BookDemoModalTrigger
-                    label="Talk to a life science data lead"
-                    bookingUrl={DEMO_BOOKING_URL}
-                    embedCalendly={false}
-                    className="inline-flex items-center justify-center rounded-md bg-[#025eaa] px-8 py-4 font-outfit font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-[#014a87] active:scale-95"
+                  <BookConsultationModalTrigger
+                    label="Talk to a life Science data lead"
+                    title="Talk to a life Science data lead"
+                    className="inline-flex w-full items-center justify-center rounded-md border-2 border-slate-200 bg-white px-6 py-3 text-sm font-bold text-gray-900 transition-all hover:-translate-y-1 hover:border-[#025eaa] hover:text-[#025eaa] active:scale-95 sm:w-auto"
                   />
                 </div>
               </FadeIn>
@@ -919,7 +917,7 @@ export default function Home() {
         {/* Subtle technical background accent */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] opacity-40 [background-size:32px_32px]" />
 
-        <div className="mx-auto w-full px-4 sm:px-8 lg:px-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           {/* Reduced internal padding from p-20 to p-10 */}
           <div className="relative overflow-hidden rounded-md border border-slate-200 bg-white p-8 text-center shadow-2xl shadow-blue-900/5 sm:p-12">
             {/* Decorative Brand Anchor - Top Center */}

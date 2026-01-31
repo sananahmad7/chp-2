@@ -46,7 +46,7 @@ export default function StickyStory({ scenes }: Props) {
 
   return (
     <div className="relative bg-white font-inter">
-      <div className="container mx-auto px-4 py-24 sm:px-8 lg:px-16">
+      <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-16 xl:px-0">
         <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
           {/* LEFT AREA: Pinned Progress Timeline */}
           <aside className="lg:col-span-4">

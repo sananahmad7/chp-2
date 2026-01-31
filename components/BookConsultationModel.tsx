@@ -13,7 +13,6 @@ export default function BookConsultationModal({
   onClose,
   title = "Book a consultation",
 }: Props) {
-  // Form State
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
@@ -24,7 +23,6 @@ export default function BookConsultationModal({
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const lastActiveRef = useRef<HTMLElement | null>(null);
 
-  // Reset form each time it opens
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
@@ -35,12 +33,9 @@ export default function BookConsultationModal({
     setMessage("");
   }, [open]);
 
-  // Accessibility + body scroll lock + ESC close + focus restore
   useEffect(() => {
     if (!open) return;
-
     lastActiveRef.current = document.activeElement as HTMLElement;
-
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -48,7 +43,6 @@ export default function BookConsultationModal({
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKeyDown);
-
     setTimeout(() => closeBtnRef.current?.focus(), 0);
 
     return () => {
@@ -60,15 +54,15 @@ export default function BookConsultationModal({
 
   if (!open) return null;
 
-  // Theme-aligned styles
   const modalPanel =
-    "w-full max-w-lg rounded-2xl border border-white/10 bg-[rgb(var(--header-bg-rgb)/0.98)] text-[var(--header-text-color)] shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur font-inter";
+    "w-full max-w-lg rounded-md border border-slate-300 bg-white text-slate-900 shadow-2xl font-inter overflow-hidden flex flex-col max-h-[90vh]";
   const field =
-    "mt-2 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-[var(--header-text-color)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/50 font-inter";
-  const labelStyle = "text-xs font-semibold text-white/80 font-inter";
-  const helper = "text-sm text-white/70 font-inter";
+    "mt-2 w-full rounded-md border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-[#025eaa] focus:ring-1 focus:ring-[#025eaa] transition-all font-inter";
+  const labelStyle =
+    "text-[10px] font-bold uppercase tracking-widest text-slate-400 font-inter";
+  const helper = "text-sm leading-relaxed text-slate-500 font-inter";
   const cta =
-    "inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-[var(--accent-color)] hover:opacity-90 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]/40 font-inter";
+    "inline-flex items-center rounded-md bg-slate-900 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-all hover:bg-black active:scale-95 shadow-lg font-inter";
 
   return (
     <div
@@ -77,49 +71,46 @@ export default function BookConsultationModal({
       aria-modal="true"
       aria-labelledby="booking-title"
     >
-      {/* 1. BACKDROP: Clicking this will close the modal */}
       <div
         className="absolute inset-0 bg-black/60 transition-opacity"
         aria-hidden="true"
         onClick={onClose}
       />
 
-      {/* 2. PANEL: stopPropagation ensures clicks inside the form don't close it */}
       <div
         className="relative w-full max-w-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className={modalPanel}>
-          <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
+          <div className="h-1.5 w-full shrink-0 bg-[#025eaa]" />
+
+          {/* Header */}
+          <div className="flex shrink-0 items-start justify-between gap-4 p-6 sm:p-10">
             <div>
+              <span className="font-outfit text-[10px] font-bold uppercase tracking-[0.3em] text-[#025eaa]">
+                Technical Access
+              </span>
               <h2
                 id="booking-title"
-                className="font-display text-lg font-semibold tracking-normal"
+                className="mt-2 font-outfit text-2xl font-bold tracking-tight text-slate-900"
               >
                 {title}
               </h2>
-              <p className={`mt-1 ${helper}`}>
-                Fill in your details below to schedule a session.
-              </p>
             </div>
 
             <button
               ref={closeBtnRef}
               type="button"
               onClick={onClose}
-              className="focus-visible:ring-[var(--accent-color)]/50 inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
+              className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none"
             >
-              <span className="sr-only">Close</span>
               <svg
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
+                strokeWidth="3"
               >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -127,21 +118,27 @@ export default function BookConsultationModal({
             </button>
           </div>
 
+          {/* Scrollable Form Content */}
           <form
-            className="px-5 pb-5 sm:px-6 sm:pb-6"
+            className="flex-1 overflow-y-auto px-6 pb-6 sm:px-10 sm:pb-10"
             onSubmit={(e) => {
               e.preventDefault();
               setSubmitted(true);
             }}
           >
-            <div className="grid gap-4">
-              <div className="grid gap-4 sm:grid-cols-2">
+            <p className={`mb-6 ${helper}`}>
+              Provide your project details to coordinate a technical session
+              with our specialists.
+            </p>
+
+            <div className="grid gap-6">
+              <div className="grid gap-6 sm:grid-cols-2">
                 <label className="block">
                   <span className={labelStyle}>Full Name</span>
                   <input
                     type="text"
                     required
-                    placeholder="John Doe"
+                    placeholder="E.g. Dr. Sarah Chen"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className={field}
@@ -149,11 +146,11 @@ export default function BookConsultationModal({
                 </label>
 
                 <label className="block">
-                  <span className={labelStyle}>Email Address</span>
+                  <span className={labelStyle}>Professional Email</span>
                   <input
                     type="email"
                     required
-                    placeholder="john@example.com"
+                    placeholder="sarah@lifescience.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={field}
@@ -161,9 +158,9 @@ export default function BookConsultationModal({
                 </label>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2">
                 <label className="block">
-                  <span className={labelStyle}>Preferred Date</span>
+                  <span className={labelStyle}>Proposed Date</span>
                   <input
                     type="date"
                     required
@@ -174,7 +171,7 @@ export default function BookConsultationModal({
                 </label>
 
                 <label className="block">
-                  <span className={labelStyle}>Preferred Time</span>
+                  <span className={labelStyle}>Time</span>
                   <input
                     type="time"
                     required
@@ -186,12 +183,10 @@ export default function BookConsultationModal({
               </div>
 
               <label className="block">
-                <span className={labelStyle}>
-                  Briefly describe your project
-                </span>
+                <span className={labelStyle}>Project Context</span>
                 <textarea
                   rows={3}
-                  placeholder="Tell us a bit about what you're working on..."
+                  placeholder="Describe your requirements..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className={`${field} resize-none`}
@@ -199,27 +194,23 @@ export default function BookConsultationModal({
               </label>
             </div>
 
-            {submitted ? (
-              <div
-                role="status"
-                className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 font-inter text-sm text-emerald-200"
-              >
-                Thank you, {name.split(" ")[0]}! Your request was submitted.
-                We&apos;ll email you at {email} soon.
+            {submitted && (
+              <div className="mt-6 rounded-md border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
+                Submission successful. Our team will reach out within 24 hours.
               </div>
-            ) : null}
+            )}
 
-            <div className="mt-6 flex items-center justify-end gap-3">
+            <div className="sticky bottom-0 mt-10 flex items-center justify-between gap-4 border-t border-slate-100 bg-white pt-8">
               <button
                 type="button"
                 onClick={onClose}
-                className="focus-visible:ring-[var(--accent-color)]/40 inline-flex items-center rounded-md px-4 py-2 font-inter text-sm font-semibold text-[var(--header-text-color)] ring-1 ring-white/20 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
+                className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900"
               >
                 Cancel
               </button>
 
               <button type="submit" className={cta}>
-                Submit request
+                Submit
               </button>
             </div>
           </form>

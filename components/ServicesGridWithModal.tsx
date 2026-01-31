@@ -48,8 +48,8 @@ export default function ServicesGridWithModal({
 
   return (
     <div className="relative font-inter">
-      {/* 1. Header Trigger - Minimalist Text Link */}
-      <div className="absolute -top-16 right-0 sm:-top-20">
+      {/* 1. Header Trigger */}
+      <div className="absolute -top-10 left-0 md:-top-10 lg:-top-20 lg:left-auto lg:right-0">
         <button
           onClick={() => setAllOpen(true)}
           className="text-xs font-bold uppercase tracking-widest text-[#025eaa] transition-all hover:opacity-70 sm:inline-block"
@@ -58,14 +58,13 @@ export default function ServicesGridWithModal({
         </button>
       </div>
 
-      {/* 2. Main Grid - Asymmetric "L-Frame" Design */}
+      {/* 2. Main Grid */}
       <div className="grid grid-cols-1 gap-px border-y border-slate-100 bg-slate-100 md:grid-cols-2 lg:grid-cols-4">
         {services.slice(0, 4).map((s) => (
           <article
             key={s.title}
             className="group relative flex flex-col bg-white p-8 transition-all hover:z-10 hover:shadow-2xl hover:shadow-blue-900/10"
           >
-            {/* Interactive Brand Anchor Line */}
             <div className="absolute left-0 top-8 h-8 w-1 bg-[#025eaa] transition-all duration-500 group-hover:h-12" />
 
             <h3 className="font-outfit text-xl font-bold leading-tight text-gray-900">
@@ -97,14 +96,15 @@ export default function ServicesGridWithModal({
         ))}
       </div>
 
-      {/* 3. EXPLORE ALL SERVICES MODAL - Dashboard Style */}
+      {/* 3. EXPLORE ALL SERVICES MODAL */}
       {allOpen && (
         <div
           className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6"
           role="dialog"
         >
+          {/* REMOVED backdrop-blur-md, ADDED bg-black/60 */}
           <div
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+            className="absolute inset-0 bg-black/60 transition-opacity"
             onClick={closeModal}
           />
           <div className="relative w-full max-w-5xl overflow-hidden rounded-md border border-slate-200 bg-white shadow-2xl">
@@ -150,14 +150,15 @@ export default function ServicesGridWithModal({
         </div>
       )}
 
-      {/* 4. INDIVIDUAL SERVICE DETAIL MODAL - Refined High-Contrast */}
+      {/* 4. INDIVIDUAL SERVICE DETAIL MODAL */}
       {open && active && (
         <div
           className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6"
           role="dialog"
         >
+          {/* REMOVED backdrop-blur-lg, ADDED bg-black/60 */}
           <div
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-lg"
+            className="absolute inset-0 bg-black/60 transition-opacity"
             onClick={closeModal}
           />
           <div className="relative w-full max-w-2xl overflow-hidden rounded-md border border-slate-300 bg-white shadow-2xl">
