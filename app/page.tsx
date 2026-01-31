@@ -381,97 +381,103 @@ export default function Home() {
       {/* HERO SECTION */}
       <section
         aria-labelledby="hero-heading"
-        /* Reduced min-h from 68/74vh to 60/65vh */
-        className="relative isolate min-h-[60vh] w-full overflow-y-hidden overflow-x-clip sm:min-h-[62vh] lg:min-h-[65vh]"
+        /* Reduced min-h from 85vh to 70vh and tightened padding */
+        className="sm:pt-25 relative isolate flex min-h-[70vh] w-full items-center overflow-hidden pb-12 pt-28 sm:pb-16"
       >
-        {/* Video Background */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
+        {/* Video Background Layer */}
+        <div className="absolute inset-0 -z-10">
           <HeroVideo
             poster="/video/lsp-hero-poster.webp"
             sources={[
               { src: "/video/lsp-hero.webm", type: "video/webm" },
               { src: "/video/lsp-hero.mp4", type: "video/mp4" },
             ]}
-            className="h-full w-full scale-[1.1] object-cover sm:scale-[1.28] lg:scale-[1.34]"
+            /* Slightly reduced scale to fit the shorter container better */
+            className="h-full w-full scale-[1.2] object-cover"
             objectPosition="center 85%"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,51,0.48))]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.82),rgba(0,0,51,0.45))]"
           />
         </div>
 
-        <div className=" lg:px-15 mx-auto w-full px-4  pb-10 pt-16  sm:px-8 sm:pb-12 sm:pt-20 md:pb-14 md:pt-24">
-          <div
-            /* Reduced grid min-height slightly */
-            className="grid min-h-[clamp(350px,45vh,550px)] w-full min-w-0 max-w-full items-stretch gap-6 lg:grid-cols-12 lg:gap-0"
-            style={heroGridStyle}
-          >
-            {/* Left Section: Increased width to col-span-8 to help heading fit on 2 lines */}
-
-            <div className="flex min-w-0 flex-col justify-center  py-5 lg:col-span-8 lg:min-h-[var(--hero-card-h)] xl:col-span-7">
-              {/* Inner Content Wrapper */}
-              <div className="relative mt-5 flex w-full min-w-0 max-w-full flex-col p-0 lg:mt-0">
+        <div className="mx-auto w-full max-w-7xl px-4 xl:px-0">
+          <div className="grid items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
+            {/* Left: Value Proposition Panel */}
+            <div className="lg:col-span-7 xl:col-span-6">
+              {/* Reduced padding from p-10 to p-8/p-6 */}
+              <div className="relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md sm:p-8">
+                {/* Scaled down text slightly for compactness */}
                 <h1
                   id="hero-heading"
-                  className="mt-3 font-outfit text-4xl font-bold leading-tight text-white sm:text-6xl md:text-7xl md:leading-[1.05]"
+                  className="font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl md:leading-[1.1]"
                 >
                   Price &amp; tender overview for Nordic pharma
                 </h1>
 
-                <p className="mt-4 max-w-prose font-inter text-base leading-7 text-white/80 sm:mt-7 sm:text-lg">
-                  Clear signals for pricing, tenders, and supply risk, delivered
+                <p className="mt-4 max-w-prose text-base leading-relaxed text-white/85">
+                  Clear signals for pricing, tenders, and supply risk—delivered
                   with traceability and explainability that regulated teams can
                   trust.
                 </p>
 
-                <ul className="mt-5 space-y-2 font-inter text-sm text-white/80 sm:mt-6">
-                  <li>
-                    • Source linked observations and audit friendly exports
+                {/* Tightened space-y on bullets */}
+                <ul className="mt-6 space-y-2 text-sm text-white/80">
+                  <li className="flex items-center gap-3">
+                    <span className="h-px w-4 bg-[var(--accent-color)]" />
+                    Source‑linked observations and audit‑friendly exports
                   </li>
-                  <li>
-                    • Scenario support for pricing/tender decisions (where
-                    applicable)
+                  <li className="flex items-center gap-3">
+                    <span className="h-px w-4 bg-[var(--accent-color)]" />
+                    Scenario support for pricing/tender decisions
                   </li>
-                  <li>• Shortage signals with explainable drivers</li>
+                  <li className="flex items-center gap-3">
+                    <span className="h-px w-4 bg-[var(--accent-color)]" />
+                    Shortage signals with explainable drivers
+                  </li>
                 </ul>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3 font-inter sm:mt-9 sm:gap-4">
+                {/* CTAs - Reduced margin */}
+                <div className="mt-8 flex flex-wrap items-center gap-5">
                   <BookConsultationModalTrigger
-                    label="Book a demo"
-                    title="Schedule a walkthrough"
-                    className="inline-flex items-center rounded-md bg-[var(--primary-color)] px-6 py-[0.85rem] text-base font-medium text-white transition-colors hover:bg-[var(--secondary-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/30"
+                    label="Book a Demo"
+                    title="Book a Demo"
+                    className="inline-flex items-center justify-center rounded-md bg-[#025eaa] px-8 py-4 font-bold text-white shadow-lg shadow-blue-900/10 transition-all hover:bg-[#014a87] active:scale-95"
                   />
 
                   <a
                     href="#lsp-story-heading"
-                    className="inline-flex items-center whitespace-normal break-words text-white/90 underline decoration-white/50 underline-offset-4 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-color)]"
+                    className="inline-flex items-center text-sm font-semibold text-white/90 underline decoration-white/30 underline-offset-8 transition-colors hover:text-white hover:decoration-white"
                   >
                     See the platform story →
                   </a>
                 </div>
 
-                <div className="mt-4 font-inter sm:mt-9">
-                  <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/75">
+                {/* Trust Footer - Reduced top padding */}
+                <div className="mt-8 border-t border-white/10 pt-6">
+                  <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] font-bold uppercase tracking-widest text-white/60">
                     <li>Nordic coverage</li>
-                    <li className="hidden sm:inline">•</li>
                     <li>Traceable signals</li>
-                    <li className="hidden sm:inline">•</li>
-                    <li>ISO 27001 / GDPR ready</li>
+                    <li>ISO 27001 / GDPR‑ready</li>
                   </ul>
                 </div>
               </div>
             </div>
-            {/* Right Section: Reduced width to col-span-4 and pushed to the end */}
-            <div className="relative mt-6 min-w-0 overflow-hidden lg:col-span-4 lg:col-start-9 lg:mt-0 lg:min-h-[var(--hero-card-h)]">
-              <HeroRightMap
-                initialCountry="DK"
-                className="h-full w-full max-w-full"
-              />
+
+            {/* Right: Map Panel - Matches the shorter height of the left card automatically */}
+            <div className="relative mt-6 lg:col-span-5 lg:mt-0 xl:col-span-6">
+              <div className="h-full min-h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
+                <HeroRightMap
+                  initialCountry="DK"
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
+
       {/* Pillars Section */}
       <section
         id="pillars"
