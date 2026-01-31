@@ -482,7 +482,7 @@ export default function Home() {
       <section
         id="pillars"
         aria-labelledby="pillars-heading"
-        className="relative scroll-mt-24 overflow-hidden border-t border-gray-200 bg-white py-24"
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-200 bg-white py-16"
       >
         <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           <FadeIn>
@@ -566,7 +566,7 @@ export default function Home() {
       <section
         id="lsp-story"
         aria-labelledby="lsp-heading"
-        className="lg:py-25 relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-10 "
+        className=" relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-16 "
       >
         {/* Minimalist Background Accents */}
         <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] translate-x-1/4 opacity-10 [background:radial-gradient(circle_at_center,rgba(2,94,170,0.4)_0,transparent_70%)]" />
@@ -671,7 +671,7 @@ export default function Home() {
       <section
         id="lsp-story"
         aria-labelledby="lsp-story-heading"
-        className="lg:py-25 relative mx-auto max-w-7xl scroll-mt-24 border-t border-[var(--border-color)] px-4 py-10 md:px-8 lg:px-16 xl:px-0"
+        className=" relative scroll-mt-24 border-t border-[var(--border-color)] "
       >
         {/* The heading is now handled inside StickyStory for better sticky behavior */}
         <StickyStory scenes={scenes} />
@@ -702,7 +702,7 @@ export default function Home() {
       {/* Compliance Section */}
       <section
         aria-labelledby="compliance-heading"
-        className="relative scroll-mt-24 border-t border-gray-100 bg-white py-12 lg:py-16"
+        className="relative scroll-mt-24 border-t border-gray-100 bg-white py-16 "
       >
         <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           {/* Full-Width Header: Above the Image Level */}
@@ -823,7 +823,7 @@ export default function Home() {
       <section
         id="about"
         aria-labelledby="about-heading"
-        className="lg:py-25 relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-16"
+        className=" relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-16"
       >
         <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-16 xl:px-0">
           <div className="grid items-center gap-16 lg:grid-cols-12">
@@ -918,7 +918,7 @@ export default function Home() {
       {/* Contact band */}
       <section
         aria-labelledby="contact-heading"
-        className="relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-12 lg:py-16"
+        className="relative scroll-mt-24 overflow-hidden border-t border-gray-100 bg-white py-16"
       >
         {/* Subtle technical background accent */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] opacity-40 [background-size:32px_32px]" />
