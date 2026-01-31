@@ -381,18 +381,17 @@ export default function Home() {
       {/* HERO SECTION */}
       <section
         aria-labelledby="hero-heading"
-        /* Reduced min-h from 85vh to 70vh and tightened padding */
-        className="sm:pt-25 relative isolate flex min-h-[70vh] w-full items-center overflow-hidden pb-12 pt-28 sm:pb-16"
+        /* ✅ prevent horizontal scroll on mobile */
+        className="relative isolate flex min-h-[70vh] w-full items-center overflow-x-hidden overflow-y-hidden pb-12 pt-28 sm:pb-16"
       >
         {/* Video Background Layer */}
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <HeroVideo
             poster="/video/lsp-hero-poster.webp"
             sources={[
               { src: "/video/lsp-hero.webm", type: "video/webm" },
               { src: "/video/lsp-hero.mp4", type: "video/mp4" },
             ]}
-            /* Slightly reduced scale to fit the shorter container better */
             className="h-full w-full scale-[1.2] object-cover"
             objectPosition="center 85%"
           />
@@ -403,15 +402,13 @@ export default function Home() {
         </div>
 
         <div className="mx-auto w-full max-w-7xl px-4 xl:px-0">
-          <div className="grid items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
+          <div className="grid min-w-0 max-w-full items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
             {/* Left: Value Proposition Panel */}
-            <div className="lg:col-span-7 xl:col-span-6">
-              {/* Reduced padding from p-10 to p-8/p-6 */}
-              <div className="relative flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md sm:p-8">
-                {/* Scaled down text slightly for compactness */}
+            <div className="min-w-0 lg:col-span-7 xl:col-span-6">
+              <div className="relative flex h-full w-full max-w-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md sm:p-8">
                 <h1
                   id="hero-heading"
-                  className="font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl md:leading-[1.1]"
+                  className="break-words font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl md:leading-[1.1]"
                 >
                   Price &amp; tender overview for Nordic pharma
                 </h1>
@@ -422,24 +419,28 @@ export default function Home() {
                   trust.
                 </p>
 
-                {/* Tightened space-y on bullets */}
                 <ul className="mt-6 space-y-2 text-sm text-white/80">
-                  <li className="flex items-center gap-3">
-                    <span className="h-px w-4 bg-[var(--accent-color)]" />
-                    Source‑linked observations and audit‑friendly exports
+                  <li className="flex min-w-0 items-center gap-3">
+                    <span className="h-px w-4 shrink-0 bg-[var(--accent-color)]" />
+                    <span className="min-w-0 break-words">
+                      Source-linked observations and audit-friendly exports
+                    </span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <span className="h-px w-4 bg-[var(--accent-color)]" />
-                    Scenario support for pricing/tender decisions
+                  <li className="flex min-w-0 items-center gap-3">
+                    <span className="h-px w-4 shrink-0 bg-[var(--accent-color)]" />
+                    <span className="min-w-0 break-words">
+                      Scenario support for pricing/tender decisions
+                    </span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <span className="h-px w-4 bg-[var(--accent-color)]" />
-                    Shortage signals with explainable drivers
+                  <li className="flex min-w-0 items-center gap-3">
+                    <span className="h-px w-4 shrink-0 bg-[var(--accent-color)]" />
+                    <span className="min-w-0 break-words">
+                      Shortage signals with explainable drivers
+                    </span>
                   </li>
                 </ul>
 
-                {/* CTAs - Reduced margin */}
-                <div className="mt-8 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex min-w-0 flex-wrap items-center gap-5">
                   <BookConsultationModalTrigger
                     label="Book a Demo"
                     title="Book a Demo"
@@ -448,29 +449,28 @@ export default function Home() {
 
                   <a
                     href="#lsp-story-heading"
-                    className="inline-flex items-center text-sm font-semibold text-white/90 underline decoration-white/30 underline-offset-8 transition-colors hover:text-white hover:decoration-white"
+                    className="min-w-0 whitespace-normal break-words text-sm font-semibold text-white/90 underline decoration-white/30 underline-offset-8 transition-colors hover:text-white hover:decoration-white"
                   >
                     See the platform story →
                   </a>
                 </div>
 
-                {/* Trust Footer - Reduced top padding */}
                 <div className="mt-8 border-t border-white/10 pt-6">
                   <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] font-bold uppercase tracking-widest text-white/60">
                     <li>Nordic coverage</li>
                     <li>Traceable signals</li>
-                    <li>ISO 27001 / GDPR‑ready</li>
+                    <li>ISO 27001 / GDPR-ready</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* Right: Map Panel - Matches the shorter height of the left card automatically */}
-            <div className="relative mt-6 lg:col-span-5 lg:mt-0 xl:col-span-6">
-              <div className="h-full min-h-[320px] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
+            {/* Right: Map Panel */}
+            <div className="relative mt-6 min-w-0 lg:col-span-5 lg:mt-0 xl:col-span-6">
+              <div className="h-full min-h-[320px] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-sm">
                 <HeroRightMap
                   initialCountry="DK"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full max-w-full"
                 />
               </div>
             </div>
@@ -671,7 +671,7 @@ export default function Home() {
       <section
         id="lsp-story"
         aria-labelledby="lsp-story-heading"
-        className="lg:py-25 relative mx-auto max-w-7xl scroll-mt-24 border-t border-[var(--border-color)] px-4 py-10 md:px-0"
+        className="lg:py-25 relative mx-auto max-w-7xl scroll-mt-24 border-t border-[var(--border-color)] px-4 py-10 md:px-8 lg:px-16 xl:px-0"
       >
         {/* The heading is now handled inside StickyStory for better sticky behavior */}
         <StickyStory scenes={scenes} />
