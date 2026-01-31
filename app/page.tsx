@@ -416,7 +416,7 @@ export default function Home() {
                   Price &amp; tender overview for Nordic pharma
                 </h1>
 
-                <p className="mt-4 max-w-prose text-base leading-relaxed text-white/85">
+                <p className="mt-4 max-w-prose text-base leading-relaxed text-white">
                   Clear signals for pricing, tenders, and supply risk—delivered
                   with traceability and explainability that regulated teams can
                   trust.
